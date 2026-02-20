@@ -260,6 +260,7 @@ body::before {
    ════════════════════════════════════════════════════ */
 .hero {
   min-height: 100vh;
+  min-height: 100dvh; /* dynamic viewport for mobile browsers */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -268,7 +269,12 @@ body::before {
   padding: 60px 24px;
   position: relative;
   overflow: hidden;
-  background: #1a1210 url('images/foto-anillo.jpg') center center / cover no-repeat;
+  background-color: #1a1210;
+  background-image: url('images/foto-anillo.jpg');
+  background-size: cover;
+  background-position: center 20%; /* keeps faces visible */
+  background-repeat: no-repeat;
+  background-attachment: scroll; /* avoid fixed on mobile (iOS bug) */
 }
 
 .hero-overlay {
@@ -437,17 +443,40 @@ section {
 .invite-section {
   text-align: center;
   max-width: 100%;
-  padding: 100px 24px;
+  padding: 80px 24px;
   background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.invite-inner {
-  max-width: 680px;
-  margin: 0 auto;
+/* Paper texture card */
+.invite-paper {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  background: url('images/paper.png') center center / cover no-repeat;
+  padding: 72px 64px;
+  text-align: center;
+  box-shadow: 0 8px 48px rgba(44,37,32,0.13);
 }
 
-.invite-quote { margin-bottom: 28px; }
-.invite-sub { max-width: 520px; margin: 0 auto; }
+/* Subtle inner shadow to make text readable on paper texture */
+.invite-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(250,247,242,0.18);
+  pointer-events: none;
+}
+
+.invite-paper > * { position: relative; z-index: 1; }
+
+.invite-quote { margin-bottom: 24px; }
+.invite-sub {
+  max-width: 100%; /* no overflow — paper container constrains width */
+  margin: 0;
+}
 
 
 /* ════════════════════════════════════════════════════
@@ -512,25 +541,26 @@ section {
 
 .detail-heading { margin-bottom: 12px; }
 
-.map-placeholder {
-  margin-top: 20px;
-  width: 100%;
-  height: 140px;
-  background: linear-gradient(135deg, #e0d8cc, #cfc5b5);
-  display: flex;
+.location-trigger {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  letter-spacing: 3px;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--ink-light);
-  opacity: 0.8;
-  border: 1px dashed var(--gold-light);
+  color: var(--gold);
   cursor: pointer;
-  text-decoration: none;
-  text-align: center;
+  background: none;
+  border: none;
+  padding: 0;
   font-family: 'Jost', sans-serif;
+  text-decoration: none;
+  transition: color 0.2s;
 }
+
+.location-trigger::after { content: ' →'; font-size: 14px; }
+.location-trigger:hover { color: var(--rose-deep); }
 
 .dress-trigger {
   display: inline-flex;
@@ -893,4 +923,6 @@ footer {
   .admin-stats         { grid-template-columns: 1fr; }
   .overlay-card        { padding: 40px 24px; }
   .photo-single        { max-width: 100%; }
+  .invite-paper        { padding: 48px 32px; }
+  .hero                { background-position: center 15%; }
 }
