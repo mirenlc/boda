@@ -268,7 +268,7 @@ body::before {
   padding: 60px 24px;
   position: relative;
   overflow: hidden;
-  background: #1a1210 url('foto-anillo.jpg') center center / cover no-repeat;
+  background: #1a1210 url('images/foto-anillo.jpg') center center / cover no-repeat;
 }
 
 .hero-overlay {
