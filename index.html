@@ -310,53 +310,22 @@
 </div>
 
 
-<!-- ══════════ ADMIN ══════════ -->
-<button class="admin-toggle" onclick="openAdmin()" title="Panel de administración">ADMIN</button>
 
-<div class="admin-panel" id="adminPanel">
-  <div class="admin-header">
-    <h2 class="admin-title">Panel · Confirmaciones</h2>
-    <button class="admin-close" onclick="closeAdmin()">✕ Cerrar</button>
-  </div>
-  <div class="admin-stats" id="adminStats"></div>
-  <div id="adminTable"></div>
-  <br>
-  <button class="admin-export" onclick="exportCSV()">Exportar CSV</button>
-  <p style="margin-top:20px;font-size:12px;color:rgba(255,255,255,0.3);line-height:1.7;font-family:'Jost',sans-serif">
-    Los datos se guardan en este dispositivo y se envían a Google Sheets automáticamente.
-  </p>
-</div>
 
 
 <script>
-// ─── GOOGLE SHEETS CONFIG ──────────────────────────────────────────
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxi-3oHNXQKtJO4cnwPMBVSUgnlC3t47ertAjMR4XYyCJHoZuXW3CCMSC1YOYgZ-An2wQ/exec';
-const STORAGE_KEY = 'rsvp_submissions';
+// ─── FORMSPREE CONFIG ─────────────────────────────────────────────
+const FORMSPREE_URL = 'https://formspree.io/f/xzdaagvl';
+const NAMES_KEY     = 'rsvp_names';
 
-// ─── STORAGE ───────────────────────────────────────────────────────
-async function getRSVPs() {
-  try {
-    const result = await window.storage.get(STORAGE_KEY, true);
-    return result ? JSON.parse(result.value) : [];
-  } catch { return []; }
+// ─── ANTI-DUPLICATE (localStorage) ───────────────────────────────
+function getNames() {
+  try { return JSON.parse(localStorage.getItem(NAMES_KEY) || '[]'); } catch { return []; }
 }
-
-async function saveRSVPs(list) {
-  await window.storage.set(STORAGE_KEY, JSON.stringify(list), true);
-}
-
-// ─── GOOGLE SHEETS (background, no blocking) ──────────────────────
-function sendToSheets(entry) {
-  if (!SHEETS_URL || SHEETS_URL === 'TU_URL_DE_APPS_SCRIPT_AQUI') return;
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
-  fetch(SHEETS_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(entry),
-    signal: controller.signal
-  }).catch(() => {}).finally(() => clearTimeout(timeout));
+function saveName(nombre) {
+  const names = getNames();
+  names.push(nombre.toLowerCase());
+  localStorage.setItem(NAMES_KEY, JSON.stringify(names));
 }
 
 // ─── FORM LOGIC ────────────────────────────────────────────────────
@@ -366,8 +335,8 @@ function toggleGuests(val) {
 
 async function submitRSVP(e) {
   e.preventDefault();
-  const btn    = document.getElementById('btnText');
-  const btnEl  = btn.closest('button');
+  const btn   = document.getElementById('btnText');
+  const btnEl = btn.closest('button');
   btn.textContent = 'Enviando';
   btnEl.classList.add('btn-loading');
 
@@ -376,28 +345,41 @@ async function submitRSVP(e) {
   const extraGuests = asistencia === 'si' ? parseInt(document.getElementById('guests').value) : 0;
   const totalGuests = asistencia === 'si' ? extraGuests + 1 : 0;
 
-  const list = await getRSVPs();
-  const dup  = list.find(r => r.nombre.toLowerCase() === nombre.toLowerCase());
-  if (dup) {
+  // Anti-duplicado por nombre
+  const names = getNames();
+  if (names.includes(nombre.toLowerCase())) {
     showError(`"${nombre}" ya tiene una confirmación registrada. Si necesitas hacer cambios, habla con Miren o Randy.`);
     return;
   }
 
-  const entry = {
-    id: Date.now(), nombre, asistencia, extraGuests, totalGuests,
-    fecha: new Date().toLocaleString('es', { dateStyle: 'medium', timeStyle: 'short' })
-  };
+  try {
+    const res = await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        nombre,
+        asistencia:         asistencia === 'si' ? 'Sí asistirá' : 'No asistirá',
+        acompanantes_extra: extraGuests,
+        total_personas:     totalGuests,
+        _subject:           `RSVP Boda · ${nombre}`
+      })
+    });
 
-  await saveRSVPs([...list, entry]);
-  sendToSheets(entry);
+    if (!res.ok) throw new Error();
 
-  document.getElementById('rsvpForm').style.display = 'none';
-  document.getElementById('successMsg').classList.add('show');
-  if (asistencia === 'si') {
-    const extra = extraGuests > 0 ? ` (y ${extraGuests} acompañante${extraGuests > 1 ? 's' : ''})` : '';
-    document.getElementById('successText').textContent = `¡${nombre}, nos alegra mucho que vengas${extra}! Te esperamos el 1 de Abril. 🌸`;
-  } else {
-    document.getElementById('successText').textContent = `Entendemos, ${nombre}. Te llevaremos en el pensamiento ese día. Gracias por hacernos saber.`;
+    saveName(nombre);
+    document.getElementById('rsvpForm').style.display = 'none';
+    document.getElementById('successMsg').classList.add('show');
+
+    if (asistencia === 'si') {
+      const extra = extraGuests > 0 ? ` (y ${extraGuests} acompañante${extraGuests > 1 ? 's' : ''})` : '';
+      document.getElementById('successText').textContent = `¡${nombre}, nos alegra mucho que vengas${extra}! Te esperamos el 1 de Abril. 🌸`;
+    } else {
+      document.getElementById('successText').textContent = `Entendemos, ${nombre}. Te llevaremos en el pensamiento ese día. Gracias por hacernos saber.`;
+    }
+
+  } catch {
+    showError('Hubo un problema al enviar. Por favor intenta de nuevo.');
   }
 }
 
@@ -416,60 +398,7 @@ function openOverlay()  { document.getElementById('dressOverlay').classList.add(
 function closeOverlay() { document.getElementById('dressOverlay').classList.remove('open'); document.body.style.overflow = ''; }
 function closeOverlayBg(e) { if (e.target === document.getElementById('dressOverlay')) closeOverlay(); }
 
-// ─── ADMIN ─────────────────────────────────────────────────────────
-async function openAdmin() {
-  const list = await getRSVPs();
-  const si   = list.filter(r => r.asistencia === 'si');
-  const total = si.reduce((acc, r) => acc + (r.totalGuests || 1), 0);
 
-  document.getElementById('adminStats').innerHTML = `
-    <div class="stat-box"><span class="stat-number">${list.length}</span><div class="stat-label">Confirmaciones</div></div>
-    <div class="stat-box"><span class="stat-number">${si.length}</span><div class="stat-label">Asistirán</div></div>
-    <div class="stat-box"><span class="stat-number">${total}</span><div class="stat-label">Total personas</div></div>`;
-
-  if (!list.length) {
-    document.getElementById('adminTable').innerHTML = '<p style="color:rgba(255,255,255,0.4);font-size:14px;margin-top:20px;font-family:Jost,sans-serif">Todavía no hay confirmaciones.</p>';
-  } else {
-    const rows = list.map(r => `
-      <tr>
-        <td>${r.nombre}</td>
-        <td><span class="badge ${r.asistencia}">${r.asistencia === 'si' ? '✓ Asistirá' : '✗ No asistirá'}</span></td>
-        <td>${r.asistencia === 'si' ? r.totalGuests : '—'}</td>
-        <td style="font-size:11px;opacity:0.5">${r.fecha}</td>
-      </tr>`).join('');
-    document.getElementById('adminTable').innerHTML = `
-      <div style="overflow-x:auto">
-        <table class="rsvp-table">
-          <thead><tr><th>Nombre</th><th>Asistencia</th><th>Total personas</th><th>Registrado</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>`;
-  }
-
-  document.getElementById('adminPanel').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeAdmin() {
-  document.getElementById('adminPanel').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-async function exportCSV() {
-  const list = await getRSVPs();
-  if (!list.length) { alert('No hay datos para exportar.'); return; }
-  const headers = ['Nombre','Asistencia','Acompañantes extra','Total personas','Fecha'];
-  const rows = list.map(r => [
-    r.nombre, r.asistencia === 'si' ? 'Sí' : 'No',
-    r.extraGuests ?? '—', r.totalGuests ?? '—', r.fecha
-  ].map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(','));
-  const csv  = [headers.join(','), ...rows].join('\n');
-  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
-  const a    = document.createElement('a');
-  a.href     = URL.createObjectURL(blob);
-  a.download = 'confirmaciones-miren-randy.csv';
-  a.click();
-}
 
 // ─── SCROLL REVEAL ─────────────────────────────────────────────────
 const observer = new IntersectionObserver(entries => {
