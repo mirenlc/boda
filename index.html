@@ -5,853 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Miren & Randy · 01.04.2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ivory: #faf7f2;
-    --cream: #f2ece0;
-    --gold: #b8975a;
-    --gold-light: #d4b07a;
-    --rose: #c9a49a;
-    --rose-deep: #9e6b61;
-    --sage: #8a9e8c;
-    --ink: #2c2520;
-    --ink-light: #6b5c54;
-    --white: #fff;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--ivory);
-    color: var(--ink);
-    font-family: 'Jost', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-  }
-
-  /* ---- GRAIN TEXTURE ---- */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-  }
-
-  /* ---- HERO ---- */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 60px 24px;
-    position: relative;
-    background: linear-gradient(160deg, #faf7f2 0%, #f5ede0 50%, #ede0d4 100%);
-    overflow: hidden;
-  }
-
-  .hero-decor {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  /* Botanical SVG decorations */
-  .hero-decor svg {
-    position: absolute;
-    opacity: 0.18;
-  }
-
-  .decor-tl { top: -20px; left: -20px; width: 320px; transform: rotate(-15deg); }
-  .decor-br { bottom: -20px; right: -20px; width: 320px; transform: rotate(165deg); }
-
-  .hero-eyebrow {
-    font-family: 'Jost', sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 28px;
-    animation: fadeUp 1s ease both;
-  }
-
-  .hero-names {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(72px, 13vw, 140px);
-    font-weight: 300;
-    line-height: 0.9;
-    color: var(--ink);
-    letter-spacing: -2px;
-    animation: fadeUp 1s ease 0.15s both;
-  }
-
-  .hero-names span {
-    display: block;
-    font-style: italic;
-    color: var(--rose-deep);
-  }
-
-  .hero-ampersand {
-    display: block;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(40px, 7vw, 80px);
-    font-style: italic;
-    color: var(--gold);
-    margin: -8px 0;
-    font-weight: 300;
-    animation: fadeUp 1s ease 0.25s both;
-  }
-
-  .hero-divider {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin: 36px 0 24px;
-    animation: fadeUp 1s ease 0.35s both;
-  }
-
-  .hero-divider-line {
-    width: 60px;
-    height: 1px;
-    background: var(--gold);
-  }
-
-  .hero-divider-icon {
-    font-size: 18px;
-  }
-
-  .hero-date {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(18px, 3vw, 26px);
-    font-weight: 400;
-    color: var(--ink-light);
-    letter-spacing: 3px;
-    animation: fadeUp 1s ease 0.45s both;
-  }
-
-  .hero-cta {
-    margin-top: 48px;
-    animation: fadeUp 1s ease 0.6s both;
-  }
-
-  .btn {
-    display: inline-block;
-    padding: 14px 40px;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    background: transparent;
-    transition: all 0.35s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--gold);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.35s ease;
-  }
-
-  .btn:hover::before { transform: scaleX(1); }
-  .btn:hover { color: var(--ivory); }
-  .btn span { position: relative; z-index: 1; }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: var(--ink-light);
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    animation: fadeIn 2s ease 1.5s both;
-  }
-
-  .scroll-hint::after {
-    content: '';
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    animation: scrollLine 2s ease infinite;
-  }
-
-  /* ---- SECTIONS ---- */
-  section {
-    padding: 100px 24px;
-    max-width: 860px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-size: 10px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 400;
-    margin-bottom: 20px;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 6vw, 56px);
-    font-weight: 300;
-    line-height: 1.1;
-    margin-bottom: 32px;
-  }
-
-  .section-title em {
-    font-style: italic;
-    color: var(--rose-deep);
-  }
-
-  /* ---- INVITATION COPY ---- */
-  .invite-section {
-    text-align: center;
-    background: var(--white);
-    max-width: 100%;
-    padding: 100px 24px;
-    background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%);
-  }
-
-  .invite-inner {
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
-  .invite-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(20px, 3.5vw, 30px);
-    font-weight: 300;
-    line-height: 1.7;
-    color: var(--ink);
-    margin-bottom: 28px;
-  }
-
-  .invite-quote em {
-    font-style: italic;
-    color: var(--rose-deep);
-  }
-
-  .invite-sub {
-    font-size: 14px;
-    line-height: 1.9;
-    color: var(--ink-light);
-    max-width: 520px;
-    margin: 0 auto;
-  }
-
-  /* ---- PHOTOS ---- */
-  .photos-section {
-    max-width: 100%;
-    padding: 80px 24px;
-    background: var(--cream);
-  }
-
-  .photos-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    max-width: 900px;
-    margin: 48px auto 0;
-  }
-
-  .photo-placeholder {
-    position: relative;
-    aspect-ratio: 3/4;
-    background: linear-gradient(135deg, #e8ddd4, #d4c9bc);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-  }
-
-  .photo-placeholder:hover { transform: scale(1.01); }
-
-  .photo-placeholder:first-child {
-    margin-top: 40px;
-  }
-
-  .photo-placeholder img.uploaded {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .photo-placeholder-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    z-index: 1;
-    transition: opacity 0.3s;
-  }
-
-  .photo-placeholder.has-image .photo-placeholder-inner { opacity: 0; }
-
-  .photo-icon {
-    width: 48px;
-    height: 48px;
-    opacity: 0.5;
-  }
-
-  .photo-label {
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    opacity: 0.7;
-  }
-
-  .photo-upload-input {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 2;
-  }
-
-  /* ---- DETAILS ---- */
-  .details-section {
-    padding: 100px 24px;
-    max-width: 100%;
-    background: var(--ivory);
-  }
-
-  .details-inner {
-    max-width: 860px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: start;
-  }
-
-  .detail-block {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .detail-icon {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 20px;
-  }
-
-  .detail-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 400;
-    margin-bottom: 12px;
-    color: var(--ink);
-  }
-
-  .detail-text {
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--ink-light);
-  }
-
-  .map-placeholder {
-    margin-top: 20px;
-    width: 100%;
-    height: 200px;
-    background: linear-gradient(135deg, #e0d8cc, #cfc5b5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    opacity: 0.8;
-    border: 1px dashed var(--gold-light);
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-  }
-
-  .dress-trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 16px;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: 'Jost', sans-serif;
-    transition: color 0.2s;
-  }
-
-  .dress-trigger:hover { color: var(--rose-deep); }
-
-  .dress-trigger::after {
-    content: '→';
-    font-size: 14px;
-  }
-
-  /* ---- DRESS CODE OVERLAY ---- */
-  .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(44, 37, 32, 0.75);
-    backdrop-filter: blur(8px);
-    z-index: 900;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-  }
-
-  .overlay.open {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .overlay-card {
-    background: var(--ivory);
-    max-width: 720px;
-    width: 100%;
-    padding: 56px 48px;
-    position: relative;
-    transform: translateY(20px);
-    transition: transform 0.4s ease;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  .overlay.open .overlay-card {
-    transform: translateY(0);
-  }
-
-  .overlay-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 22px;
-    color: var(--ink-light);
-    line-height: 1;
-    padding: 8px;
-    transition: color 0.2s, transform 0.2s;
-  }
-
-  .overlay-close:hover {
-    color: var(--ink);
-    transform: rotate(90deg);
-  }
-
-  .overlay-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 42px;
-    font-weight: 300;
-    margin-bottom: 8px;
-  }
-
-  .overlay-sub {
-    font-size: 13px;
-    color: var(--ink-light);
-    margin-bottom: 40px;
-    line-height: 1.7;
-  }
-
-  .dress-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 32px;
-  }
-
-  .dress-item {
-    padding: 24px;
-    background: var(--cream);
-    text-align: center;
-  }
-
-  .dress-item-icon {
-    font-size: 40px;
-    margin-bottom: 12px;
-    display: block;
-  }
-
-  .dress-item-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    margin-bottom: 8px;
-  }
-
-  .dress-item-desc {
-    font-size: 12px;
-    color: var(--ink-light);
-    line-height: 1.7;
-  }
-
-  .dress-note {
-    padding: 20px;
-    border-left: 2px solid var(--gold);
-    background: linear-gradient(to right, rgba(184,151,90,0.06), transparent);
-    font-size: 13px;
-    line-height: 1.7;
-    color: var(--ink-light);
-  }
-
-  /* ---- RSVP ---- */
-  .rsvp-section {
-    max-width: 100%;
-    padding: 100px 24px 120px;
-    background: linear-gradient(160deg, var(--cream) 0%, var(--ivory) 100%);
-    text-align: center;
-  }
-
-  .rsvp-inner {
-    max-width: 560px;
-    margin: 0 auto;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-
-  .form-group label {
-    display: block;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 8px;
-  }
-
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%;
-    padding: 14px 16px;
-    border: 1px solid rgba(184,151,90,0.3);
-    background: var(--white);
-    font-family: 'Jost', sans-serif;
-    font-size: 14px;
-    color: var(--ink);
-    font-weight: 300;
-    outline: none;
-    transition: border-color 0.25s;
-    appearance: none;
-  }
-
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--gold);
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .form-submit {
-    width: 100%;
-    margin-top: 12px;
-  }
-
-  .success-msg {
-    display: none;
-    padding: 28px;
-    background: linear-gradient(135deg, rgba(184,151,90,0.1), rgba(201,164,154,0.1));
-    border: 1px solid rgba(184,151,90,0.3);
-    text-align: center;
-  }
-
-  .success-msg.show { display: block; }
-
-  .success-msg .emoji { font-size: 36px; margin-bottom: 12px; display: block; }
-
-  .success-msg h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    margin-bottom: 8px;
-  }
-
-  .success-msg p {
-    font-size: 13px;
-    color: var(--ink-light);
-    line-height: 1.7;
-  }
-
-  .error-msg {
-    display: none;
-    color: var(--rose-deep);
-    font-size: 13px;
-    text-align: center;
-    margin-top: 12px;
-    padding: 12px;
-    background: rgba(158,107,97,0.08);
-  }
-
-  .error-msg.show { display: block; }
-
-  /* ---- FOOTER ---- */
-  footer {
-    padding: 48px 24px;
-    text-align: center;
-    background: var(--ink);
-    color: rgba(255,255,255,0.4);
-    font-size: 12px;
-    letter-spacing: 2px;
-  }
-
-  footer .footer-names {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--gold-light);
-    margin-bottom: 8px;
-  }
-
-  /* ---- ADMIN PANEL ---- */
-  .admin-toggle {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 800;
-    background: var(--ink);
-    color: var(--gold);
-    border: none;
-    padding: 10px 18px;
-    font-size: 10px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    font-family: 'Jost', sans-serif;
-    opacity: 0.5;
-    transition: opacity 0.2s;
-  }
-
-  .admin-toggle:hover { opacity: 1; }
-
-  .admin-panel {
-    position: fixed;
-    inset: 0;
-    background: var(--ink);
-    z-index: 950;
-    overflow-y: auto;
-    padding: 48px 32px;
-    display: none;
-    color: var(--ivory);
-  }
-
-  .admin-panel.open { display: block; }
-
-  .admin-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 40px;
-  }
-
-  .admin-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 36px;
-    font-weight: 300;
-    color: var(--gold-light);
-  }
-
-  .admin-close {
-    background: none;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: var(--ivory);
-    padding: 8px 20px;
-    cursor: pointer;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
-    letter-spacing: 2px;
-  }
-
-  .admin-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 40px;
-  }
-
-  .stat-box {
-    padding: 24px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    text-align: center;
-  }
-
-  .stat-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
-    font-weight: 300;
-    color: var(--gold-light);
-    display: block;
-  }
-
-  .stat-label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    margin-top: 4px;
-  }
-
-  .rsvp-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-
-  .rsvp-table th {
-    text-align: left;
-    padding: 12px 16px;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    font-weight: 400;
-  }
-
-  .rsvp-table td {
-    padding: 14px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    color: rgba(255,255,255,0.7);
-    vertical-align: top;
-  }
-
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .badge.yes { background: rgba(138,158,140,0.2); color: #8a9e8c; }
-  .badge.no { background: rgba(158,107,97,0.2); color: #c9a49a; }
-
-  .admin-export {
-    margin-top: 24px;
-    background: rgba(184,151,90,0.15);
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    padding: 12px 28px;
-    cursor: pointer;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-  }
-
-  /* ---- ANIMATIONS ---- */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes scrollLine {
-    0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
-    50% { opacity: 1; transform: scaleY(1); }
-  }
-
-  /* ---- RESPONSIVE ---- */
-  @media (max-width: 640px) {
-    .photos-grid { grid-template-columns: 1fr; }
-    .photo-placeholder:first-child { margin-top: 0; }
-    .details-inner { grid-template-columns: 1fr; gap: 48px; }
-    .form-row { grid-template-columns: 1fr; }
-    .dress-grid { grid-template-columns: 1fr; }
-    .admin-stats { grid-template-columns: 1fr; }
-    .overlay-card { padding: 40px 28px; }
-  }
-
-  /* Reveal on scroll */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <!-- ══════════ HERO ══════════ -->
 <section class="hero">
+
+  <!-- Capa oscura sobre la foto -->
+  <div class="hero-overlay"></div>
+
+  <!-- Decoración botánica -->
   <div class="hero-decor">
-    <!-- Botanical branch left -->
-    <svg class="decor-tl" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 280 C 60 220, 80 160, 140 120 C 180 90, 220 70, 260 30" stroke="#b8975a" stroke-width="1.5" fill="none"/>
-      <path d="M80 200 C 100 170, 130 155, 150 130" stroke="#b8975a" stroke-width="1" fill="none"/>
-      <ellipse cx="155" cy="125" rx="14" ry="8" fill="#c9a49a" opacity="0.5" transform="rotate(-30 155 125)"/>
-      <ellipse cx="100" cy="193" rx="12" ry="7" fill="#8a9e8c" opacity="0.4" transform="rotate(20 100 193)"/>
-      <ellipse cx="145" cy="115" rx="10" ry="6" fill="#c9a49a" opacity="0.35" transform="rotate(-55 145 115)"/>
-      <path d="M130 155 C 155 145, 170 130, 185 110" stroke="#b8975a" stroke-width="1" fill="none"/>
-      <ellipse cx="188" cy="106" rx="12" ry="7" fill="#8a9e8c" opacity="0.45" transform="rotate(-40 188 106)"/>
-      <circle cx="260" cy="30" r="6" fill="#b8975a" opacity="0.4"/>
-      <path d="M240 55 C 250 40, 260 32, 270 20" stroke="#b8975a" stroke-width="1" fill="none"/>
-      <ellipse cx="210" cy="80" rx="11" ry="6" fill="#c9a49a" opacity="0.4" transform="rotate(-20 210 80)"/>
+    <svg class="decor-tl" viewBox="0 0 300 300" fill="none">
+      <path d="M20 280 C 60 220, 80 160, 140 120 C 180 90, 220 70, 260 30" stroke="#fff" stroke-width="1.5" fill="none"/>
+      <path d="M80 200 C 100 170, 130 155, 150 130" stroke="#fff" stroke-width="1" fill="none"/>
+      <ellipse cx="155" cy="125" rx="14" ry="8" fill="#fff" opacity="0.5" transform="rotate(-30 155 125)"/>
+      <ellipse cx="100" cy="193" rx="12" ry="7" fill="#fff" opacity="0.4" transform="rotate(20 100 193)"/>
+      <ellipse cx="145" cy="115" rx="10" ry="6" fill="#fff" opacity="0.35" transform="rotate(-55 145 115)"/>
+      <path d="M130 155 C 155 145, 170 130, 185 110" stroke="#fff" stroke-width="1" fill="none"/>
+      <ellipse cx="188" cy="106" rx="12" ry="7" fill="#fff" opacity="0.45" transform="rotate(-40 188 106)"/>
+      <circle cx="260" cy="30" r="6" fill="#fff" opacity="0.4"/>
+      <ellipse cx="210" cy="80" rx="11" ry="6" fill="#fff" opacity="0.4" transform="rotate(-20 210 80)"/>
     </svg>
-    <!-- Botanical branch right -->
-    <svg class="decor-br" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 280 C 60 220, 80 160, 140 120 C 180 90, 220 70, 260 30" stroke="#b8975a" stroke-width="1.5" fill="none"/>
-      <path d="M80 200 C 100 170, 130 155, 150 130" stroke="#b8975a" stroke-width="1" fill="none"/>
-      <ellipse cx="155" cy="125" rx="14" ry="8" fill="#c9a49a" opacity="0.5" transform="rotate(-30 155 125)"/>
-      <ellipse cx="100" cy="193" rx="12" ry="7" fill="#8a9e8c" opacity="0.4" transform="rotate(20 100 193)"/>
-      <ellipse cx="145" cy="115" rx="10" ry="6" fill="#c9a49a" opacity="0.35" transform="rotate(-55 145 115)"/>
-      <path d="M130 155 C 155 145, 170 130, 185 110" stroke="#b8975a" stroke-width="1" fill="none"/>
-      <ellipse cx="188" cy="106" rx="12" ry="7" fill="#8a9e8c" opacity="0.45" transform="rotate(-40 188 106)"/>
+    <svg class="decor-br" viewBox="0 0 300 300" fill="none">
+      <path d="M20 280 C 60 220, 80 160, 140 120 C 180 90, 220 70, 260 30" stroke="#fff" stroke-width="1.5" fill="none"/>
+      <path d="M80 200 C 100 170, 130 155, 150 130" stroke="#fff" stroke-width="1" fill="none"/>
+      <ellipse cx="155" cy="125" rx="14" ry="8" fill="#fff" opacity="0.5" transform="rotate(-30 155 125)"/>
+      <ellipse cx="100" cy="193" rx="12" ry="7" fill="#fff" opacity="0.4" transform="rotate(20 100 193)"/>
+      <ellipse cx="145" cy="115" rx="10" ry="6" fill="#fff" opacity="0.35" transform="rotate(-55 145 115)"/>
+      <path d="M130 155 C 155 145, 170 130, 185 110" stroke="#fff" stroke-width="1" fill="none"/>
+      <ellipse cx="188" cy="106" rx="12" ry="7" fill="#fff" opacity="0.45" transform="rotate(-40 188 106)"/>
     </svg>
   </div>
 
@@ -865,12 +49,11 @@
 
   <div class="hero-divider">
     <div class="hero-divider-line"></div>
-    <!-- 3D ring icon SVG -->
-    <svg class="hero-divider-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <ellipse cx="12" cy="14" rx="9" ry="4" fill="rgba(184,151,90,0.15)" stroke="#b8975a" stroke-width="1"/>
-      <ellipse cx="12" cy="10" rx="9" ry="4" fill="var(--ivory)" stroke="#b8975a" stroke-width="1"/>
-      <path d="M3 10 L3 14" stroke="#b8975a" stroke-width="1"/>
-      <path d="M21 10 L21 14" stroke="#b8975a" stroke-width="1"/>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <ellipse cx="12" cy="14" rx="9" ry="4" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+      <ellipse cx="12" cy="10" rx="9" ry="4" fill="rgba(0,0,0,0.2)" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+      <path d="M3 10 L3 14" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+      <path d="M21 10 L21 14" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
     </svg>
     <div class="hero-divider-line"></div>
   </div>
@@ -888,19 +71,16 @@
 <!-- ══════════ INVITATION COPY ══════════ -->
 <div class="invite-section">
   <div class="invite-inner reveal">
-    <!-- 3D flower/wedding icon -->
     <svg width="56" height="56" viewBox="0 0 56 56" fill="none" style="margin:0 auto 28px;display:block">
-      <!-- Isometric envelope / letter style -->
       <rect x="4" y="16" width="48" height="32" rx="2" fill="#f5ede0" stroke="#b8975a" stroke-width="1.2"/>
       <rect x="4" y="18" width="48" height="8" fill="#b8975a" opacity="0.15"/>
       <path d="M4 16 L28 30 L52 16" stroke="#b8975a" stroke-width="1.2" fill="none"/>
-      <!-- wax seal -->
       <circle cx="28" cy="38" r="8" fill="#c9a49a" opacity="0.6"/>
       <circle cx="28" cy="38" r="5" fill="#b8975a" opacity="0.4"/>
       <text x="28" y="42" font-size="7" text-anchor="middle" fill="#fff" opacity="0.9" font-family="serif">♡</text>
     </svg>
 
-    <p class="section-label" style="text-align:center">La Invitación</p>
+    <span class="section-label" style="text-align:center;display:block">La Invitación</span>
     <blockquote class="invite-quote">
       Con mucha alegría y el corazón lleno,<br>
       los invitamos a ser parte de <em>un momento que cambia todo.</em>
@@ -912,51 +92,15 @@
 </div>
 
 
-<!-- ══════════ PHOTOS ══════════ -->
+<!-- ══════════ PHOTO ══════════ -->
 <div class="photos-section">
   <div style="max-width:860px;margin:0 auto" class="reveal">
-    <p class="section-label" style="text-align:center">Nosotros</p>
+    <span class="section-label" style="text-align:center;display:block">Nosotros</span>
     <h2 class="section-title" style="text-align:center">Una historia bonita <em>que sigue</em></h2>
   </div>
-  <div class="photos-grid reveal">
-    <!-- Photo 1 -->
-    <div class="photo-placeholder" id="photo1">
-      <input type="file" class="photo-upload-input" accept="image/*" onchange="uploadPhoto(this, 'photo1')">
-      <div class="photo-placeholder-inner">
-        <svg class="photo-icon" viewBox="0 0 48 48" fill="none">
-          <!-- Isometric camera 3D style -->
-          <rect x="6" y="14" width="36" height="26" rx="3" fill="#d4c9bc" stroke="#b8975a" stroke-width="1"/>
-          <rect x="6" y="14" width="36" height="5" rx="1" fill="#c5b8aa" stroke="#b8975a" stroke-width="1"/>
-          <!-- lens -->
-          <circle cx="24" cy="30" r="8" fill="#bfb0a0" stroke="#b8975a" stroke-width="1"/>
-          <circle cx="24" cy="30" r="5" fill="#a89888" stroke="#b8975a" stroke-width="0.8"/>
-          <circle cx="22" cy="28" r="2" fill="rgba(255,255,255,0.3)"/>
-          <!-- flash -->
-          <rect x="32" y="17" width="5" height="3" rx="0.5" fill="#d4b07a" opacity="0.7"/>
-          <!-- shutter -->
-          <rect x="16" y="10" width="8" height="5" rx="1" fill="#d4c9bc" stroke="#b8975a" stroke-width="0.8"/>
-        </svg>
-        <span class="photo-label">Foto · 01</span>
-      </div>
-    </div>
-    <!-- Photo 2 -->
-    <div class="photo-placeholder" id="photo2">
-      <input type="file" class="photo-upload-input" accept="image/*" onchange="uploadPhoto(this, 'photo2')">
-      <div class="photo-placeholder-inner">
-        <svg class="photo-icon" viewBox="0 0 48 48" fill="none">
-          <rect x="6" y="14" width="36" height="26" rx="3" fill="#d4c9bc" stroke="#b8975a" stroke-width="1"/>
-          <rect x="6" y="14" width="36" height="5" rx="1" fill="#c5b8aa" stroke="#b8975a" stroke-width="1"/>
-          <circle cx="24" cy="30" r="8" fill="#bfb0a0" stroke="#b8975a" stroke-width="1"/>
-          <circle cx="24" cy="30" r="5" fill="#a89888" stroke="#b8975a" stroke-width="0.8"/>
-          <circle cx="22" cy="28" r="2" fill="rgba(255,255,255,0.3)"/>
-          <rect x="32" y="17" width="5" height="3" rx="0.5" fill="#d4b07a" opacity="0.7"/>
-          <rect x="16" y="10" width="8" height="5" rx="1" fill="#d4c9bc" stroke="#b8975a" stroke-width="0.8"/>
-        </svg>
-        <span class="photo-label">Foto · 02</span>
-      </div>
-    </div>
+  <div class="photo-single reveal">
+    <img src="foto-juntos.jpg" alt="Miren & Randy">
   </div>
-  <p style="text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-light);opacity:0.6;margin-top:20px;max-width:860px;margin-left:auto;margin-right:auto">Haz clic en cada cuadro para subir tus fotos</p>
 </div>
 
 
@@ -964,54 +108,59 @@
 <div class="details-section">
   <div class="details-inner">
 
-    <!-- Date & Time -->
+    <!-- Fecha & Hora -->
     <div class="detail-block reveal">
-      <!-- 3D isometric calendar -->
-      <svg class="detail-icon" viewBox="0 0 60 60" fill="none">
-        <!-- base shadow -->
-        <ellipse cx="30" cy="53" rx="22" ry="4" fill="rgba(44,37,32,0.08)"/>
-        <!-- calendar body -->
-        <rect x="8" y="12" width="44" height="38" rx="3" fill="#f5ede0" stroke="#b8975a" stroke-width="1.2"/>
-        <!-- header -->
-        <rect x="8" y="12" width="44" height="12" rx="3" fill="#b8975a"/>
-        <rect x="8" y="20" width="44" height="4" fill="#b8975a"/>
-        <!-- rings -->
-        <rect x="19" y="8" width="4" height="10" rx="2" fill="#9e6b61"/>
-        <rect x="37" y="8" width="4" height="10" rx="2" fill="#9e6b61"/>
-        <!-- date number -->
-        <text x="30" y="42" font-size="18" font-family="Cormorant Garamond, serif" text-anchor="middle" fill="#b8975a" font-weight="400">1</text>
-        <!-- tiny dots for grid -->
-        <circle cx="15" cy="31" r="1.5" fill="#d4c9bc"/>
-        <circle cx="22" cy="31" r="1.5" fill="#d4c9bc"/>
-        <circle cx="44" cy="31" r="1.5" fill="#d4c9bc"/>
-        <circle cx="37" cy="31" r="1.5" fill="#d4c9bc"/>
-        <circle cx="15" cy="38" r="1.5" fill="#d4c9bc"/>
-        <circle cx="44" cy="38" r="1.5" fill="#d4c9bc"/>
-        <circle cx="37" cy="38" r="1.5" fill="#d4c9bc"/>
+      <svg class="detail-icon" viewBox="0 0 64 64" fill="none">
+        <ellipse cx="32" cy="57" rx="22" ry="4" fill="rgba(44,37,32,0.08)"/>
+        <!-- cuerpo -->
+        <rect x="8" y="13" width="48" height="40" rx="3" fill="#f5ede0" stroke="#b8975a" stroke-width="1.2"/>
+        <!-- header dorado -->
+        <rect x="8" y="13" width="48" height="13" rx="3" fill="#b8975a"/>
+        <rect x="8" y="22" width="48" height="4" fill="#b8975a"/>
+        <!-- argollas -->
+        <rect x="20" y="8" width="4" height="11" rx="2" fill="#9e6b61"/>
+        <rect x="40" y="8" width="4" height="11" rx="2" fill="#9e6b61"/>
+        <!-- texto: "1" grande -->
+        <text x="28" y="46" font-size="20" font-family="Cormorant Garamond, serif" text-anchor="middle" fill="#b8975a" font-weight="400">1</text>
+        <!-- texto: "abr" pequeño -->
+        <text x="40" y="46" font-size="9" font-family="Jost, sans-serif" text-anchor="middle" fill="#9e6b61" font-weight="400">abr</text>
+        <!-- puntitos decorativos -->
+        <circle cx="14" cy="33" r="1.5" fill="#d4c9bc"/>
+        <circle cx="14" cy="40" r="1.5" fill="#d4c9bc"/>
+        <circle cx="21" cy="33" r="1.5" fill="#d4c9bc"/>
+        <circle cx="55" cy="33" r="1.5" fill="#d4c9bc"/>
+        <circle cx="55" cy="40" r="1.5" fill="#d4c9bc"/>
+        <circle cx="48" cy="40" r="1.5" fill="#d4c9bc"/>
       </svg>
       <h3 class="detail-heading">Fecha & Hora</h3>
       <p class="detail-text">
         Miércoles, 1 de Abril de 2026<br>
-        <strong style="color:var(--ink)">—:—  hrs</strong><br>
-        <span style="opacity:0.7;font-size:13px">[agrega aquí la hora]</span>
+        <strong style="color:#2c2520">—:—  hrs</strong><br>
+        <span style="opacity:0.6;font-size:12px">[agrega aquí la hora]</span>
       </p>
     </div>
 
-    <!-- Location -->
+    <!-- Lugar de Celebración (Lugar + Celebración unificados) -->
     <div class="detail-block reveal">
-      <!-- 3D isometric pin -->
-      <svg class="detail-icon" viewBox="0 0 60 60" fill="none">
-        <ellipse cx="30" cy="54" rx="14" ry="3.5" fill="rgba(44,37,32,0.08)"/>
-        <!-- pin body -->
-        <path d="M30 52 C25 42, 12 32, 12 22 C12 13 20 7 30 7 C40 7 48 13 48 22 C48 32 35 42 30 52Z" fill="#c9a49a" stroke="#9e6b61" stroke-width="1.2"/>
-        <!-- pin highlight face -->
-        <path d="M30 50 C27 42, 16 33, 16 22 C16 15 22 10 30 10" fill="rgba(255,255,255,0.15)"/>
-        <!-- inner circle -->
-        <circle cx="30" cy="22" r="8" fill="#fff" opacity="0.35"/>
-        <circle cx="30" cy="22" r="5" fill="#9e6b61"/>
-        <circle cx="27" cy="19" r="2" fill="rgba(255,255,255,0.4)"/>
+      <!-- Ícono: copa de champagne sola -->
+      <svg class="detail-icon" viewBox="0 0 64 64" fill="none">
+        <ellipse cx="32" cy="60" rx="14" ry="3" fill="rgba(44,37,32,0.07)"/>
+        <!-- copa: bowl -->
+        <path d="M20 10 L16 34 Q16 42 32 42 Q48 42 48 34 L44 10 Z" fill="#d4b07a" opacity="0.55" stroke="#b8975a" stroke-width="1.2"/>
+        <!-- highlight lateral izquierdo -->
+        <path d="M22 12 L19 30 Q19 36 25 39" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <!-- stem -->
+        <line x1="32" y1="42" x2="32" y2="56" stroke="#b8975a" stroke-width="1.5"/>
+        <!-- base -->
+        <path d="M22 56 L42 56" stroke="#b8975a" stroke-width="2" stroke-linecap="round"/>
+        <!-- burbujas -->
+        <circle cx="28" cy="36" r="1.2" fill="rgba(255,255,255,0.55)"/>
+        <circle cx="32" cy="30" r="1"   fill="rgba(255,255,255,0.45)"/>
+        <circle cx="36" cy="38" r="0.9" fill="rgba(255,255,255,0.5)"/>
+        <circle cx="30" cy="22" r="0.8" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="35" cy="26" r="1"   fill="rgba(255,255,255,0.4)"/>
       </svg>
-      <h3 class="detail-heading">Lugar</h3>
+      <h3 class="detail-heading">Lugar de Celebración</h3>
       <p class="detail-text">
         [Nombre del lugar]<br>
         [Dirección completa]<br>
@@ -1022,60 +171,43 @@
       </a>
     </div>
 
-    <!-- Dress Code -->
+    <!-- Código de Vestir -->
     <div class="detail-block reveal">
-      <!-- 3D isometric suit/dress -->
-      <svg class="detail-icon" viewBox="0 0 60 60" fill="none">
-        <!-- shadow -->
-        <ellipse cx="30" cy="57" rx="18" ry="3" fill="rgba(44,37,32,0.07)"/>
-        <!-- Dress shape -->
-        <path d="M30 8 L22 20 L16 52 L44 52 L38 20 Z" fill="#c9a49a" stroke="#9e6b61" stroke-width="1"/>
-        <!-- bodice highlight -->
-        <path d="M30 8 L22 20 L28 20 L30 14 L32 20 L38 20 Z" fill="#b8975a" opacity="0.5"/>
-        <!-- waist -->
-        <path d="M20 28 L40 28" stroke="#9e6b61" stroke-width="0.8" opacity="0.4"/>
-        <!-- neckline -->
-        <path d="M22 20 Q30 24 38 20" stroke="#9e6b61" stroke-width="0.8" fill="none" opacity="0.6"/>
-        <!-- skirt pleats -->
-        <path d="M22 35 L18 52" stroke="#9e6b61" stroke-width="0.5" opacity="0.3"/>
-        <path d="M38 35 L42 52" stroke="#9e6b61" stroke-width="0.5" opacity="0.3"/>
-        <path d="M28 30 L26 52" stroke="#9e6b61" stroke-width="0.5" opacity="0.3"/>
-        <path d="M32 30 L34 52" stroke="#9e6b61" stroke-width="0.5" opacity="0.3"/>
+      <!-- Ícono: vestido + pantalón lado a lado -->
+      <svg class="detail-icon" viewBox="0 0 64 64" fill="none">
+        <ellipse cx="32" cy="61" rx="22" ry="3" fill="rgba(44,37,32,0.07)"/>
+
+        <!-- VESTIDO (izquierda) -->
+        <!-- escote V -->
+        <path d="M20 8 L16 16 L20 16 L22 12 L24 16 L28 16 L24 8 Z" fill="#b8975a" opacity="0.6"/>
+        <!-- falda -->
+        <path d="M16 16 L12 56 L28 56 L24 16 Z" fill="#c9a49a" stroke="#9e6b61" stroke-width="0.8"/>
+        <!-- cintura -->
+        <path d="M14 26 L26 26" stroke="#9e6b61" stroke-width="0.7" opacity="0.5"/>
+        <!-- pliegues falda -->
+        <path d="M16 32 L13 56" stroke="#9e6b61" stroke-width="0.5" opacity="0.3"/>
+        <path d="M22 30 L20 56" stroke="#9e6b61" stroke-width="0.5" opacity="0.3"/>
+
+        <!-- PANTALÓN (derecha) -->
+        <!-- pretina -->
+        <rect x="34" y="10" width="18" height="5" rx="1" fill="#b8975a" opacity="0.5" stroke="#9e6b61" stroke-width="0.7"/>
+        <!-- pierna izquierda -->
+        <path d="M34 15 L34 56 L42 56 L43 15 Z" fill="#8a9e8c" stroke="#6b8070" stroke-width="0.8"/>
+        <!-- pierna derecha -->
+        <path d="M43 15 L42 56 L52 56 L52 15 Z" fill="#7a9282" stroke="#6b8070" stroke-width="0.8"/>
+        <!-- raya del pantalón -->
+        <line x1="38" y1="15" x2="38" y2="56" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+        <line x1="48" y1="15" x2="48" y2="56" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+        <!-- dobladillo -->
+        <path d="M34 52 L42 52" stroke="#6b8070" stroke-width="0.7" opacity="0.5"/>
+        <path d="M43 52 L52 52" stroke="#6b8070" stroke-width="0.7" opacity="0.5"/>
       </svg>
       <h3 class="detail-heading">Código de vestir</h3>
       <p class="detail-text">
-        <strong style="color:var(--ink)">Cocktail</strong><br>
+        <strong style="color:#2c2520">Cocktail</strong><br>
         Elegante y sofisticado. Queremos que te veas tan bien como te sientes ese día.
       </p>
       <button class="dress-trigger" onclick="openOverlay()">¿Cómo vestirse?</button>
-    </div>
-
-    <!-- Celebrations -->
-    <div class="detail-block reveal">
-      <!-- 3D isometric champagne glasses -->
-      <svg class="detail-icon" viewBox="0 0 60 60" fill="none">
-        <ellipse cx="30" cy="56" rx="18" ry="3" fill="rgba(44,37,32,0.07)"/>
-        <!-- glass left -->
-        <path d="M16 10 L12 28 L20 28 Z" fill="#d4b07a" opacity="0.6" stroke="#b8975a" stroke-width="0.8"/>
-        <line x1="16" y1="28" x2="16" y2="44" stroke="#b8975a" stroke-width="1"/>
-        <path d="M11 44 L21 44" stroke="#b8975a" stroke-width="1.5"/>
-        <!-- glass right -->
-        <path d="M44 10 L40 28 L48 28 Z" fill="#d4b07a" opacity="0.6" stroke="#b8975a" stroke-width="0.8"/>
-        <line x1="44" y1="28" x2="44" y2="44" stroke="#b8975a" stroke-width="1"/>
-        <path d="M39 44 L49 44" stroke="#b8975a" stroke-width="1.5"/>
-        <!-- clink lines -->
-        <line x1="22" y1="16" x2="38" y2="16" stroke="#b8975a" stroke-width="0.8" stroke-dasharray="2 2"/>
-        <path d="M28 12 L32 8" stroke="#d4b07a" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M30 10 L30 5" stroke="#d4b07a" stroke-width="1" stroke-linecap="round"/>
-        <!-- bubbles -->
-        <circle cx="15" cy="22" r="1" fill="rgba(255,255,255,0.5)"/>
-        <circle cx="17" cy="17" r="0.8" fill="rgba(255,255,255,0.4)"/>
-        <circle cx="43" cy="20" r="1" fill="rgba(255,255,255,0.5)"/>
-      </svg>
-      <h3 class="detail-heading">La celebración</h3>
-      <p class="detail-text">
-        Después de la ceremonia, los esperamos para festejar juntos. Habrá tiempo para compartir, reír y crear recuerdos que atesoraremos siempre.
-      </p>
     </div>
 
   </div>
@@ -1086,30 +218,26 @@
 <div class="rsvp-section" id="rsvp">
   <div class="rsvp-inner reveal">
 
-    <!-- 3D heart icon -->
     <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="margin:0 auto 24px;display:block">
       <path d="M26 44 C26 44 8 30 8 18 C8 12 13 8 18 8 C22 8 25 10 26 12 C27 10 30 8 34 8 C39 8 44 12 44 18 C44 30 26 44 26 44Z" fill="#c9a49a" opacity="0.7" stroke="#9e6b61" stroke-width="1"/>
-      <!-- highlight -->
       <path d="M16 12 C14 14 13 17 14 20" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
     </svg>
 
-    <p class="section-label">RSVP</p>
+    <span class="section-label" style="text-align:center;display:block">RSVP</span>
     <h2 class="section-title">¿Contamos <em>contigo?</em></h2>
-    <p style="font-size:14px;line-height:1.8;color:var(--ink-light);margin-bottom:40px">
-      Tu confirmación nos ayuda a preparar cada detalle con amor. Por favor responde antes del <strong style="color:var(--ink)">27 de Marzo de 2026.</strong>
+    <p style="font-size:14px;line-height:1.8;color:#6b5c54;margin-bottom:40px;font-family:'Jost',sans-serif">
+      Tu confirmación nos ayuda a preparar cada detalle con amor.<br>
+      Por favor responde antes del <strong style="color:#2c2520">27 de Marzo de 2026.</strong>
     </p>
 
-    <!-- SUCCESS STATE -->
     <div class="success-msg" id="successMsg">
       <span class="emoji">🌸</span>
       <h3>¡Gracias, nos alegras el día!</h3>
       <p id="successText">Tu confirmación ha sido recibida. ¡Nos vemos pronto!</p>
     </div>
 
-    <!-- ERROR STATE -->
     <div class="error-msg" id="errorMsg"></div>
 
-    <!-- FORM -->
     <form id="rsvpForm" onsubmit="submitRSVP(event)">
       <div class="form-group">
         <label>Tu nombre</label>
@@ -1135,7 +263,7 @@
         </select>
       </div>
 
-      <button type="submit" class="btn form-submit"><span id="btnText">Enviar confirmación</span></button>
+      <button type="submit" class="btn btn-dark form-submit"><span id="btnText">Enviar confirmación</span></button>
     </form>
   </div>
 </div>
@@ -1143,7 +271,7 @@
 
 <!-- ══════════ FOOTER ══════════ -->
 <footer>
-  <div class="footer-names">Miren & Randy</div>
+  <span class="footer-names">Miren & Randy</span>
   <p>01 · 04 · 2026</p>
 </footer>
 
@@ -1153,9 +281,9 @@
   <div class="overlay-card">
     <button class="overlay-close" onclick="closeOverlay()" aria-label="Cerrar">✕</button>
 
-    <p class="section-label">Código de vestir</p>
-    <h2 class="overlay-title">Cocktail <em style="font-family:Cormorant Garamond,serif;font-style:italic;color:var(--rose-deep)">elegante</em></h2>
-    <p class="overlay-sub">Un balance perfecto entre lo formal y lo festivo. La idea es que te veas increíble sin llegar al vestido de gala ni quedarte en lo casual. Aquí algunos referentes:</p>
+    <span class="section-label">Código de vestir</span>
+    <h2 class="overlay-title">Cocktail <em style="font-style:italic;color:#9e6b61">elegante</em></h2>
+    <p class="overlay-sub">Un balance perfecto entre lo formal y lo festivo. La idea es que te veas increíble sin llegar al vestido de gala ni quedarte en lo casual.</p>
 
     <div class="dress-grid">
       <div class="dress-item">
@@ -1168,12 +296,7 @@
         <h4 class="dress-item-title">Para ellos</h4>
         <p class="dress-item-desc">Traje completo o blazer con pantalón de vestir. Camisa con o sin corbata. Zapatos de cuero. El saco es bienvenido y recomendado.</p>
       </div>
-      <div class="dress-item">
-        <span class="dress-item-icon">🎨</span>
-        <h4 class="dress-item-title">Paleta sugerida</h4>
-        <p class="dress-item-desc">Tonos tierra, neutros, pasteles suaves, vino, verde oliva, azul marino. Todos los colores son bienvenidos con elegancia.</p>
-      </div>
-      <div class="dress-item">
+      <div class="dress-item" style="grid-column: 1 / -1">
         <span class="dress-item-icon">🚫</span>
         <h4 class="dress-item-title">Mejor evitar</h4>
         <p class="dress-item-desc">Ropa casual (jeans, tenis), ropa de playa, looks muy informales. Tampoco blanco ni crema en vestidos (ese color es de la novia 😉).</p>
@@ -1181,118 +304,95 @@
     </div>
 
     <div class="dress-note">
-      <strong>Un tip:</strong> Si tienes dudas sobre qué ponerte, la regla es sencilla — si te lo pondrías para una cena elegante o una noche especial, ¡es perfecto para nuestra boda!
+      <strong>Un tip:</strong> Si te lo pondrías para una cena elegante o una noche especial, ¡es perfecto para nuestra boda!
     </div>
   </div>
 </div>
 
 
-<!-- ══════════ ADMIN BUTTON ══════════ -->
+<!-- ══════════ ADMIN ══════════ -->
 <button class="admin-toggle" onclick="openAdmin()" title="Panel de administración">ADMIN</button>
 
-<!-- ══════════ ADMIN PANEL ══════════ -->
 <div class="admin-panel" id="adminPanel">
   <div class="admin-header">
     <h2 class="admin-title">Panel · Confirmaciones</h2>
     <button class="admin-close" onclick="closeAdmin()">✕ Cerrar</button>
   </div>
-
   <div class="admin-stats" id="adminStats"></div>
-
   <div id="adminTable"></div>
-
   <br>
   <button class="admin-export" onclick="exportCSV()">Exportar CSV</button>
-
-  <p style="margin-top:20px;font-size:12px;color:rgba(255,255,255,0.3);line-height:1.7">
-    Los datos se guardan en el navegador de este dispositivo. Para conectar con Google Sheets, consulta las instrucciones incluidas con este sitio.
+  <p style="margin-top:20px;font-size:12px;color:rgba(255,255,255,0.3);line-height:1.7;font-family:'Jost',sans-serif">
+    Los datos se guardan en este dispositivo y se envían a Google Sheets automáticamente.
   </p>
 </div>
 
 
 <script>
 // ─── GOOGLE SHEETS CONFIG ──────────────────────────────────────────
-// Pega aquí la URL de tu Google Apps Script después de desplegarlo:
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxi-3oHNXQKtJO4cnwPMBVSUgnlC3t47ertAjMR4XYyCJHoZuXW3CCMSC1YOYgZ-An2wQ/exec';
-
-// ─── STORAGE KEY ───────────────────────────────────────────────────
 const STORAGE_KEY = 'rsvp_submissions';
 
-// ─── GET RSVPS ─────────────────────────────────────────────────────
+// ─── STORAGE ───────────────────────────────────────────────────────
 async function getRSVPs() {
   try {
     const result = await window.storage.get(STORAGE_KEY, true);
     return result ? JSON.parse(result.value) : [];
-  } catch {
-    return [];
-  }
+  } catch { return []; }
 }
 
-// ─── SAVE RSVPS (local backup) ─────────────────────────────────────
 async function saveRSVPs(list) {
   await window.storage.set(STORAGE_KEY, JSON.stringify(list), true);
 }
 
-// ─── SEND TO GOOGLE SHEETS ─────────────────────────────────────────
-async function sendToSheets(entry) {
+// ─── GOOGLE SHEETS (background, no blocking) ──────────────────────
+function sendToSheets(entry) {
   if (!SHEETS_URL || SHEETS_URL === 'TU_URL_DE_APPS_SCRIPT_AQUI') return;
-  try {
-    await fetch(SHEETS_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(entry)
-    });
-  } catch (err) {
-    console.warn('No se pudo conectar con Google Sheets:', err);
-  }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  fetch(SHEETS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(entry),
+    signal: controller.signal
+  }).catch(() => {}).finally(() => clearTimeout(timeout));
 }
 
-// ─── SHOW/HIDE GUEST COUNT ─────────────────────────────────────────
+// ─── FORM LOGIC ────────────────────────────────────────────────────
 function toggleGuests(val) {
   document.getElementById('guestGroup').style.display = val === 'si' ? 'block' : 'none';
 }
 
-// ─── SUBMIT RSVP ───────────────────────────────────────────────────
 async function submitRSVP(e) {
   e.preventDefault();
-  const btn = document.getElementById('btnText');
-  btn.textContent = 'Enviando...';
+  const btn    = document.getElementById('btnText');
+  const btnEl  = btn.closest('button');
+  btn.textContent = 'Enviando';
+  btnEl.classList.add('btn-loading');
 
-  const nombre = document.getElementById('nombre').value.trim();
-  const asistencia = document.getElementById('asistencia').value;
+  const nombre      = document.getElementById('nombre').value.trim();
+  const asistencia  = document.getElementById('asistencia').value;
   const extraGuests = asistencia === 'si' ? parseInt(document.getElementById('guests').value) : 0;
   const totalGuests = asistencia === 'si' ? extraGuests + 1 : 0;
 
-  // Check for duplicate by name (case-insensitive)
   const list = await getRSVPs();
-  const duplicate = list.find(r => r.nombre.toLowerCase() === nombre.toLowerCase());
-
-  if (duplicate) {
-    showError(`"${nombre}" ya tiene una confirmación registrada. Si necesitas hacer cambios, habla directamente con Miren o Randy.`);
-    btn.textContent = 'Enviar confirmación';
+  const dup  = list.find(r => r.nombre.toLowerCase() === nombre.toLowerCase());
+  if (dup) {
+    showError(`"${nombre}" ya tiene una confirmación registrada. Si necesitas hacer cambios, habla con Miren o Randy.`);
     return;
   }
 
   const entry = {
-    id: Date.now(),
-    nombre,
-    asistencia,
-    extraGuests,
-    totalGuests,
+    id: Date.now(), nombre, asistencia, extraGuests, totalGuests,
     fecha: new Date().toLocaleString('es', { dateStyle: 'medium', timeStyle: 'short' })
   };
 
-  // Save locally + send to Google Sheets in parallel
-  await Promise.all([
-    saveRSVPs([...list, entry]),
-    sendToSheets(entry)
-  ]);
+  await saveRSVPs([...list, entry]);
+  sendToSheets(entry);
 
-  // Show success
   document.getElementById('rsvpForm').style.display = 'none';
-  const successMsg = document.getElementById('successMsg');
-  successMsg.classList.add('show');
+  document.getElementById('successMsg').classList.add('show');
   if (asistencia === 'si') {
     const extra = extraGuests > 0 ? ` (y ${extraGuests} acompañante${extraGuests > 1 ? 's' : ''})` : '';
     document.getElementById('successText').textContent = `¡${nombre}, nos alegra mucho que vengas${extra}! Te esperamos el 1 de Abril. 🌸`;
@@ -1305,40 +405,30 @@ function showError(msg) {
   const el = document.getElementById('errorMsg');
   el.textContent = msg;
   el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 6000);
-  document.getElementById('btnText').textContent = 'Enviar confirmación';
+  setTimeout(() => el.classList.remove('show'), 7000);
+  const btn = document.getElementById('btnText');
+  btn.textContent = 'Enviar confirmación';
+  btn.closest('button').classList.remove('btn-loading');
 }
 
 // ─── OVERLAY ───────────────────────────────────────────────────────
-function openOverlay() {
-  document.getElementById('dressOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeOverlay() {
-  document.getElementById('dressOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function closeOverlayBg(e) {
-  if (e.target === document.getElementById('dressOverlay')) closeOverlay();
-}
+function openOverlay()  { document.getElementById('dressOverlay').classList.add('open');    document.body.style.overflow = 'hidden'; }
+function closeOverlay() { document.getElementById('dressOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+function closeOverlayBg(e) { if (e.target === document.getElementById('dressOverlay')) closeOverlay(); }
 
 // ─── ADMIN ─────────────────────────────────────────────────────────
 async function openAdmin() {
   const list = await getRSVPs();
-  const si = list.filter(r => r.asistencia === 'si');
-  const no = list.filter(r => r.asistencia === 'no');
-  const totalGuests = si.reduce((acc, r) => acc + (r.guests || 1), 0);
+  const si   = list.filter(r => r.asistencia === 'si');
+  const total = si.reduce((acc, r) => acc + (r.totalGuests || 1), 0);
 
   document.getElementById('adminStats').innerHTML = `
     <div class="stat-box"><span class="stat-number">${list.length}</span><div class="stat-label">Confirmaciones</div></div>
     <div class="stat-box"><span class="stat-number">${si.length}</span><div class="stat-label">Asistirán</div></div>
-    <div class="stat-box"><span class="stat-number">${totalGuests}</span><div class="stat-label">Total invitados</div></div>
-  `;
+    <div class="stat-box"><span class="stat-number">${total}</span><div class="stat-label">Total personas</div></div>`;
 
-  if (list.length === 0) {
-    document.getElementById('adminTable').innerHTML = '<p style="color:rgba(255,255,255,0.4);font-size:14px;margin-top:20px">Todavía no hay confirmaciones registradas.</p>';
+  if (!list.length) {
+    document.getElementById('adminTable').innerHTML = '<p style="color:rgba(255,255,255,0.4);font-size:14px;margin-top:20px;font-family:Jost,sans-serif">Todavía no hay confirmaciones.</p>';
   } else {
     const rows = list.map(r => `
       <tr>
@@ -1346,24 +436,14 @@ async function openAdmin() {
         <td><span class="badge ${r.asistencia}">${r.asistencia === 'si' ? '✓ Asistirá' : '✗ No asistirá'}</span></td>
         <td>${r.asistencia === 'si' ? r.totalGuests : '—'}</td>
         <td style="font-size:11px;opacity:0.5">${r.fecha}</td>
-      </tr>
-    `).join('');
-
+      </tr>`).join('');
     document.getElementById('adminTable').innerHTML = `
       <div style="overflow-x:auto">
         <table class="rsvp-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Asistencia</th>
-              <th>Total personas</th>
-              <th>Fecha de registro</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Nombre</th><th>Asistencia</th><th>Total personas</th><th>Registrado</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
-      </div>
-    `;
+      </div>`;
   }
 
   document.getElementById('adminPanel').classList.add('open');
@@ -1378,58 +458,27 @@ function closeAdmin() {
 async function exportCSV() {
   const list = await getRSVPs();
   if (!list.length) { alert('No hay datos para exportar.'); return; }
-  const headers = ['Nombre', 'Asistencia', 'Acompañantes extra', 'Total personas', 'Fecha'];
+  const headers = ['Nombre','Asistencia','Acompañantes extra','Total personas','Fecha'];
   const rows = list.map(r => [
-    r.nombre,
-    r.asistencia === 'si' ? 'Sí' : 'No',
-    r.extraGuests ?? '—',
-    r.totalGuests ?? '—',
-    r.fecha
-  ].map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(','));
-  const csv = [headers.join(','), ...rows].join('\n');
+    r.nombre, r.asistencia === 'si' ? 'Sí' : 'No',
+    r.extraGuests ?? '—', r.totalGuests ?? '—', r.fecha
+  ].map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv  = [headers.join(','), ...rows].join('\n');
   const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
   a.download = 'confirmaciones-miren-randy.csv';
   a.click();
 }
 
-// ─── PHOTO UPLOAD ──────────────────────────────────────────────────
-function uploadPhoto(input, containerId) {
-  const file = input.files[0];
-  if (!file) return;
-  const container = document.getElementById(containerId);
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    let img = container.querySelector('img.uploaded');
-    if (!img) {
-      img = document.createElement('img');
-      img.className = 'uploaded';
-      container.prepend(img);
-    }
-    img.src = e.target.result;
-    container.classList.add('has-image');
-  };
-  reader.readAsDataURL(file);
-}
-
 // ─── SCROLL REVEAL ─────────────────────────────────────────────────
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-    }
-  });
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
-
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Keyboard close
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeOverlay();
-    closeAdmin();
-  }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeOverlay(); closeAdmin(); }
 });
 </script>
 </body>
