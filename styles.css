@@ -319,6 +319,52 @@ body::before {
 .hero-botanical { flex-shrink: 0; }
 .hero-date { animation: fadeUp 1s ease 0.48s both; }
 
+.hero-countdown {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  margin: 60px 0px;
+  animation: fadeUp 1s ease 0.58s both;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.countdown-num {
+  font-family: 'Lora', serif;
+  font-size: 30px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.88);
+  line-height: 1;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.countdown-label {
+  font-family: 'Lora', serif;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+
+.countdown-sep {
+  color: rgba(255,255,255,0.25);
+  font-size: 18px;
+  padding-bottom: 14px;
+}
+
+.countdown-done {
+  font-family: 'Lora', serif;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.7);
+}
+
 /* ── Date badge (Fecha & Hora detail card) ── */
 .date-badge {
   width: 100%;
@@ -327,13 +373,10 @@ body::before {
 }
 
 .date-badge-month {
-  font-family: 'Lora', serif;
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  font-family: 'Imperial Script', cursive;
+  font-size: 56px;
   text-align: center;
-  margin-bottom: 8px;
-  opacity: 0.55;
+  color: var(--ink);
 }
 
 .date-badge-rule {
@@ -344,17 +387,17 @@ body::before {
 .date-badge-row {
   display: flex;
   align-items: center;
-  padding: 4px 8px;
   gap: 8px;
 }
 
 .date-badge-label {
   font-family: 'Lora', serif;
-  font-size: 9px;
+  font-size: 20px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   white-space: nowrap;
-  opacity: 0.65;
+  color: var(--ink);
+  opacity: 0.75;
 }
 
 .date-badge-center {
@@ -498,7 +541,7 @@ body::before {
   width: 100%;
   max-width: 580px;
   background: var(--white);
-  padding: 60px 56px;
+  padding: 100px 56px 60px;
   text-align: center;
   box-shadow:
     0 2px 0 rgba(255,255,255,0.7) inset,
@@ -517,11 +560,16 @@ body::before {
 
 .invite-paper > * { position: relative; z-index: 1; }
 
-/* orange wax seal */
+/* orange wax seal — floats above the paper edge */
 .invite-seal {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translate(-50%, -52%);
   width: 150px; height: 150px;
-  margin: 0 auto 22px;
+  margin: 0;
   display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+  filter: drop-shadow(0 4px 12px rgba(44,37,32,0.22));
 }
 
 .invite-seal img {
@@ -694,16 +742,16 @@ body::before {
 .details-header .section-label { margin-bottom: 8px; }
 
 .details-inner {
-  max-width: 880px;
+  max-width: 500px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 66px;
 }
 
 .detail-card {
   background: var(--white);
-  padding: 36px 24px 30px;
+  padding: 44px 24px 56px;
   text-align: center;
   position: relative;
   box-shadow: 0 2px 16px rgba(44,37,32,0.07);
@@ -728,6 +776,18 @@ body::before {
 
 .detail-card.stripe-green::before { background: var(--green); }
 
+.detail-card--flat {
+  background: transparent;
+  box-shadow: none;
+}
+.detail-card--flat::before { display: none; }
+.detail-card--flat:hover { transform: none; box-shadow: none; }
+
+.details-inner > :nth-child(2).detail-card--paper { transform: rotate(-1.2deg); }
+.details-inner > :nth-child(3).detail-card--paper { transform: rotate(1deg); }
+.details-inner > :nth-child(2).detail-card--paper:hover { transform: rotate(-1.2deg) translateY(-4px); }
+.details-inner > :nth-child(3).detail-card--paper:hover { transform: rotate(1deg) translateY(-4px); }
+
 .detail-icon-wrap {
   width: 64px; height: 64px;
   margin-bottom: 18px;
@@ -748,24 +808,23 @@ body::before {
 .card-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 14px;
-  font-size: 11px;
-  letter-spacing: 2px;
+  justify-content: center;
+  margin-top: 18px;
+  padding: 9px 24px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--orange);
+  color: var(--ink);
   cursor: pointer;
   background: none;
-  border: none;
-  padding: 0;
+  border: 1px solid var(--ink-light);
   font-family: 'Lora', serif;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: border-color 0.2s, color 0.2s;
   font-weight: 400;
 }
 
-.card-trigger::after { content: ' →'; font-size: 12px; }
-.card-trigger:hover { color: var(--green); }
+.card-trigger:hover { border-color: var(--green); color: var(--green); }
 
 
 /* ════════════════════════════════════════════════════
@@ -997,7 +1056,7 @@ footer {
    RESPONSIVE
    ════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
-  .details-inner { grid-template-columns: 1fr; gap: 16px; }
+  .details-inner { gap: 16px; }
   .dress-grid    { grid-template-columns: 1fr; }
   .overlay-card  { padding: 40px 22px; }
   .invite-paper  { padding: 44px 28px; transform: rotate(0); }

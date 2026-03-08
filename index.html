@@ -67,6 +67,28 @@
 
   <p class="hero-date">Miércoles · 01 de Abril · 2026</p>
 
+  <div class="hero-countdown" id="heroCountdown">
+    <div class="countdown-item">
+      <span class="countdown-num" id="cdDays">--</span>
+      <span class="countdown-label">días</span>
+    </div>
+    <div class="countdown-sep">·</div>
+    <div class="countdown-item">
+      <span class="countdown-num" id="cdHours">--</span>
+      <span class="countdown-label">horas</span>
+    </div>
+    <div class="countdown-sep">·</div>
+    <div class="countdown-item">
+      <span class="countdown-num" id="cdMins">--</span>
+      <span class="countdown-label">min</span>
+    </div>
+    <div class="countdown-sep">·</div>
+    <div class="countdown-item">
+      <span class="countdown-num" id="cdSecs">--</span>
+      <span class="countdown-label">seg</span>
+    </div>
+  </div>
+
   <div class="hero-cta">
     <a href="#rsvp" class="btn"><span>Confirmar asistencia</span></a>
   </div>
@@ -169,14 +191,12 @@
   <div class="details-inner">
 
     <!-- Fecha & Hora -->
-    <div class="detail-card reveal">
-      <img src="images/reloj-oro.png" alt="" class="detail-card-img">
-      <h3 class="detail-heading">Fecha &amp; Hora</h3>
+    <div class="detail-card detail-card--flat reveal">
+      <!-- <h3 class="detail-heading">Fecha &amp; Hora</h3>-->
       <div class="date-badge">
         <p class="date-badge-month">Abril</p>
-        <div class="date-badge-rule"></div>
         <div class="date-badge-row">
-          <span class="date-badge-label">Miércoles</span>
+          <span class="date-badge-label">Mié</span>
           <div class="date-badge-center">
             <div class="date-badge-line"></div>
             <span class="date-badge-num">01</span>
@@ -184,13 +204,12 @@
           </div>
           <span class="date-badge-label">5 pm</span>
         </div>
-        <div class="date-badge-rule"></div>
       </div>
       <a class="card-trigger" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Miren+%26+Randy&dates=20260401T170000/20260401T230000&location=Casa+Ra%C3%ADces+Canc%C3%BAn,+SM+313+MZ+280+LT+5,+Calle+Alamos,+Av.+Huayac%C3%A1n,+Canc%C3%BAn,+Q.R.,+M%C3%A9xico&ctz=America/Cancun" target="_blank">Agregar al calendario</a>
     </div>
 
     <!-- Lugar de Celebración -->
-    <div class="detail-card stripe-green reveal">
+    <div class="detail-card detail-card--paper stripe-green reveal">
       <img src="images/champagne.png" alt="" class="detail-card-img">
       <h3 class="detail-heading">Lugar de Celebración</h3>
       <p class="detail-text">
@@ -200,7 +219,7 @@
     </div>
 
     <!-- Código de Vestir -->
-    <div class="detail-card reveal">
+    <div class="detail-card detail-card--paper reveal">
       <img src="images/hanger.webp" alt="" class="detail-card-img">
       <h3 class="detail-heading">Código de Vestir</h3>
       <p class="detail-text">
@@ -404,6 +423,27 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay(); });
+
+(function() {
+  const target = new Date('2026-04-01T17:00:00-05:00').getTime();
+  function update() {
+    const diff = target - Date.now();
+    if (diff <= 0) {
+      document.getElementById('heroCountdown').innerHTML = '<span class="countdown-done">¡Es hoy!</span>';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cdDays').textContent  = String(d).padStart(2,'0');
+    document.getElementById('cdHours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cdMins').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cdSecs').textContent  = String(s).padStart(2,'0');
+  }
+  update();
+  setInterval(update, 1000);
+})();
 </script>
 </body>
 </html>
