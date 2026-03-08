@@ -1,6 +1,5 @@
 /* ════════════════════════════════════════════════════
    MIREN & RANDY · 01.04.2026
-   styles.css — Botanical Editorial Edition
    ════════════════════════════════════════════════════ */
 
 
@@ -81,7 +80,7 @@ body {
 
 .section-title {
   font-family: 'Imperial Script', cursive;
-  font-size: clamp(36px, 7vw, 60px);
+  font-size: clamp(56px, 7vw, 72px);
   font-weight: 400;
   color: var(--ink);
   line-height: 1.1;
@@ -760,7 +759,7 @@ body::before {
 
 .green-band-quote {
   font-family: 'Lora', serif;
-  font-size: clamp(20px, 2vw, 24px);
+  font-size: clamp(18px, 2vw, 22px);
   color: rgba(255,255,255,0.88);
   font-weight: 400;
   position: relative;
@@ -818,12 +817,12 @@ body::before {
 
 .details-initial--tl {
   top: -60px;
-  left: -40px;
+  left: -140px;
 }
 
 .details-initial--br {
   bottom: -60px;
-  right: -40px;
+  right: 40px;
 }
 
 .details-header {
@@ -943,7 +942,7 @@ body::before {
    ════════════════════════════════════════════════════ */
 .rsvp-section {
   background: var(--green);
-  padding: 100px 24px 112px;
+  padding: 100px 24px 0px;
   position: relative;
   overflow: hidden;
 }
@@ -1108,6 +1107,7 @@ body::before {
 .dress-item-title { margin-bottom: 6px; }
 
 .dress-note {
+  grid-column: 1 / -1;
   padding: 16px 18px;
   border-left: 3px solid var(--orange);
   background: rgba(201,109,46,0.05);
@@ -1141,6 +1141,7 @@ footer {
 footer p {
   position: relative;
   z-index: 1;
+  color: var(--white);
 }
 
 .footer-decor-bg {
