@@ -8,7 +8,7 @@
    STYLE COLORS
    ────────────────────────────────────────────────── */
 :root {
-  --green:         #23362D;
+  --green:         #28332e;
   --green-mid:     #3A5847;
   --green-light:   #798869;
   --orange:        #A53E24;
@@ -317,12 +317,7 @@ body::before {
 
 .hero-divider-line { width: 44px; height: 1px; background: rgba(255,255,255,0.3); }
 
-.hero-diamond {
-  width: 6px; height: 6px;
-  background: var(--orange);
-  transform: rotate(45deg);
-  flex-shrink: 0;
-}
+.hero-botanical { flex-shrink: 0; }
 
 .hero-date { animation: fadeUp 1s ease 0.48s both; }
 
@@ -544,7 +539,7 @@ body::before {
 }
 
 .polaroid-caption {
-  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Lora', serif;
   font-size: 16px;
   color: var(--ink-light);
   text-align: center;
@@ -553,6 +548,7 @@ body::before {
   position: absolute;
   bottom: 16px;
   left: 0; right: 0;
+  font-style: italic;
 }
 
 /* tape strips */
@@ -588,6 +584,7 @@ body::before {
   max-width: 500px;
   margin: 0 auto;
   line-height: 1.4;
+  font-style: italic;
 }
 
 .green-band-quote em {
@@ -906,12 +903,11 @@ footer {
   overflow: hidden;
 }
 
-footer::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--green), var(--green-mid), var(--green));
+.footer-botanical {
+  display: block;
+  width: 260px;
+  max-width: 90%;
+  margin: 0 auto 28px;
 }
 
 
