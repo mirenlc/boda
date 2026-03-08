@@ -241,7 +241,7 @@ body::before {
   position: relative;
   overflow: hidden;
   background-color: var(--green);
-  background-image: url('images/foto-anillo.jpg');
+  /*background-image: url('images/foto-anillo.jpg');*/
   background-size: cover;
   background-position: center 20%;
   background-repeat: no-repeat;
@@ -487,16 +487,6 @@ body::before {
   overflow: hidden;
 }
 
-/* big decorative circle bg */
-.photos-section::before {
-  content: '';
-  position: absolute;
-  top: -80px; right: -80px;
-  width: 320px; height: 320px;
-  border-radius: 50%;
-  background: var(--cream-dark);
-  opacity: 0.7;
-}
 
 .photos-header { margin-bottom: 48px; position: relative; z-index: 1; }
 .photos-header .section-label { margin-bottom: 8px; }
@@ -592,15 +582,15 @@ body::before {
   font-style: normal;
 }
 
-.green-band::before, .green-band::after {
-  content: '';
+.green-band-floral {
   position: absolute;
-  border-radius: 50%;
-  border: 56px solid rgba(255,255,255,0.03);
+  pointer-events: none;
+  opacity: 0.15;
+  width: 300px;
 }
 
-.green-band::before { width: 220px; height: 220px; top: -80px; left: -60px; }
-.green-band::after  { width: 160px; height: 160px; bottom: -60px; right: -40px; }
+.green-band-floral-tl { top: -20px; left: -20px; }
+.green-band-floral-br { bottom: -20px; right: -20px; transform: rotate(180deg); }
 
 /* orange accent line */
 .green-band-line {
@@ -723,7 +713,7 @@ body::before {
   color: rgba(255,255,255,0.025);
   white-space: nowrap;
   pointer-events: none;
-  font-weight: 700;
+  font-weight: 400;
   user-select: none;
 }
 
