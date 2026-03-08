@@ -8,16 +8,16 @@
    STYLE COLORS
    ────────────────────────────────────────────────── */
 :root {
-  --green:         #27462e;
-  --green-mid:     #406350;
-  --green-light:   #8fa876;
-  --orange:        #c96d2e;
-  --orange-light:  #e09060;
+  --green:         #23362D;
+  --green-mid:     #3A5847;
+  --green-light:   #798869;
+  --orange:        #DD752E;
+  --orange-light:  #FFB284;
   --cream:         #f7f3ec;
   --cream-dark:    #ede6d8;
   --paper:         #f2ece0;
-  --ink:           #2f1010;
-  --ink-light:     #a43838;
+  --ink:           #2F1E10;
+  --ink-light:     #624935;
   --white:         #fdfaf5;
 }
 
@@ -34,7 +34,7 @@ body {
 .hero-names {
   font-family: 'Imperial Script', cursive;
   font-size: clamp(64px, 14vw, 130px);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 0.95;
   color: var(--white);
   letter-spacing: -1px;
@@ -52,7 +52,7 @@ body {
 }
 
 .hero-date {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lora', serif;
   font-size: clamp(13px, 2vw, 18px);
   font-weight: 400;
   letter-spacing: 6px;
@@ -61,7 +61,7 @@ body {
 }
 
 .hero-eyebrow {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 10px;
   letter-spacing: 5px;
   text-transform: uppercase;
@@ -70,7 +70,7 @@ body {
 }
 
 .section-label {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 10px;
   letter-spacing: 5px;
   text-transform: uppercase;
@@ -82,7 +82,7 @@ body {
 .section-title {
   font-family: 'Imperial Script', cursive;
   font-size: clamp(36px, 7vw, 60px);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--ink);
   line-height: 1.1;
 }
@@ -93,16 +93,16 @@ body {
 }
 
 .invite-quote {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lora', serif;
   font-size: clamp(19px, 3vw, 26px);
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.20;
   color: var(--ink);
   font-style: italic;
 }
 
 .invite-sub {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 14px;
   line-height: 1.9;
   color: var(--ink-light);
@@ -112,19 +112,19 @@ body {
 .detail-heading {
   font-family: 'Imperial Script', cursive;
   font-size: 26px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--ink);
 }
 
 .detail-text {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 13px;
   line-height: 1.9;
   color: var(--ink-light);
 }
 
 .btn {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 10px;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -132,7 +132,7 @@ body {
 }
 
 .form-group label {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 10px;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -142,7 +142,7 @@ body {
 
 .form-group input,
 .form-group select {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 14px;
   font-weight: 300;
   color: var(--white);
@@ -151,19 +151,19 @@ body {
 .success-msg h3 {
   font-family: 'Imperial Script', cursive;
   font-size: 38px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--white);
 }
 
 .success-msg p {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 13px;
   color: rgba(255,255,255,0.65);
   line-height: 1.7;
 }
 
 footer {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 10px;
   letter-spacing: 3px;
   color: rgba(255,255,255,0.4);
@@ -173,36 +173,37 @@ footer {
 .footer-names {
   font-family: 'Imperial Script', cursive;
   font-size: 52px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--white);
   display: block;
   margin-bottom: 8px;
   line-height: 1;
+  text-transform: none;
 }
 
 .overlay-title {
   font-family: 'Imperial Script', cursive;
   font-size: 44px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--ink);
 }
 
 .overlay-sub {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 13px;
   color: var(--ink-light);
   line-height: 1.8;
 }
 
 .dress-item-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lora', serif;
   font-size: 19px;
   font-weight: 400;
   color: var(--ink);
 }
 
 .dress-item-desc {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 12px;
   color: var(--ink-light);
   line-height: 1.7;
@@ -330,7 +331,7 @@ body::before {
   font-size: 9px;
   letter-spacing: 4px;
   text-transform: uppercase;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   z-index: 2;
   animation: fadeIn 2s ease 1.5s both;
 }
@@ -453,24 +454,16 @@ body::before {
 
 /* orange wax seal */
 .invite-seal {
-  width: 48px; height: 48px;
-  background: var(--orange);
-  border-radius: 50%;
+  width: 150px; height: 150px;
   margin: 0 auto 22px;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 14px rgba(201,109,46,0.38);
-  position: relative;
 }
 
-.invite-seal::before {
-  content: '';
-  position: absolute;
-  inset: 5px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.38);
+.invite-seal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
-
-.invite-seal svg { position: relative; z-index: 1; }
 
 .invite-rule {
   width: 36px; height: 1.5px;
@@ -524,9 +517,10 @@ body::before {
   margin: 0 auto;
   transition: transform 0.5s ease;
   position: relative;
+  overflow: hidden;
 }
 
-.polaroid:hover { transform: rotate(0deg) scale(1.015); }
+.polaroid:hover { transform: rotate(0deg); }
 
 .polaroid img {
   width: 100%;
@@ -535,6 +529,12 @@ body::before {
   object-position: center top;
   display: block;
   filter: sepia(0.06) contrast(1.03) brightness(0.98);
+  transition: transform 0.5s ease;
+  overflow: hidden;
+}
+
+.polaroid:hover img {
+  transform: scale(1.2);
 }
 
 .polaroid-caption {
@@ -557,7 +557,7 @@ body::before {
   z-index: 2;
 }
 
-.tape-tl { top: -7px; left: 18px; transform: rotate(-7deg); }
+.tape-tl { top: -7px; left: 18px; transform: rotate(-20deg); }
 .tape-br { bottom: 30px; right: 10px; transform: rotate(5deg); }
 
 
@@ -690,7 +690,7 @@ body::before {
   background: none;
   border: none;
   padding: 0;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   text-decoration: none;
   transition: color 0.2s;
   font-weight: 400;
@@ -736,7 +736,7 @@ body::before {
 .rsvp-inner .section-title { color: var(--white); margin-bottom: 10px; }
 
 .rsvp-sub {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
   font-size: 14px;
   color: rgba(255,255,255,0.6);
   line-height: 1.85;
@@ -793,7 +793,7 @@ body::before {
   margin-top: 10px;
   padding: 12px;
   background: rgba(201,109,46,0.14);
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
 }
 
 .error-msg.show { display: block; }
@@ -877,7 +877,7 @@ body::before {
   font-size: 13px;
   line-height: 1.7;
   color: var(--ink-light);
-  font-family: 'Jost', sans-serif;
+  font-family: 'Lora', serif;
 }
 
 
@@ -885,7 +885,7 @@ body::before {
    FOOTER
    ════════════════════════════════════════════════════ */
 footer {
-  background: var(--ink);
+  background: var(--green);
   padding: 60px 24px 44px;
   text-align: center;
   position: relative;
