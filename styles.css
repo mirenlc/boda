@@ -8,7 +8,7 @@
    STYLE COLORS
    ────────────────────────────────────────────────── */
 :root {
-  --green:         #28332e;
+  --green:         #203129;
   --green-mid:     #3A5847;
   --green-light:   #798869;
   --orange:        #A53E24;
@@ -104,7 +104,7 @@ body {
 .invite-sub {
   font-family: 'Lora', serif;
   font-size: 14px;
-  line-height: 1.9;
+  line-height: 1.2;
   color: var(--ink-light);
   font-weight: 300;
 }
@@ -115,14 +115,14 @@ body {
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ink-light);
+  color: var(--orange);
 }
 
 .detail-text {
   font-family: 'Lora', serif;
   font-size: 16px;
   line-height: 1.9;
-  color: var(--ink-light);
+  color: var(--ink);
   font-style: italic;
 
 }
@@ -189,9 +189,10 @@ footer {
   width: 300px;
   height: 300px;
   object-fit: contain;
-  opacity: 0.85;
   display: block;
-  margin: 0 auto 12px;
+  position: relative;
+  z-index: 1;
+  margin: 0 auto 60px;
 }
 
 .overlay-title {
@@ -271,25 +272,36 @@ body::before {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(25,36,14,0.72) 0%,
-    rgba(25,36,14,0.52) 50%,
-    rgba(25,36,14,0.82) 100%
+    color-mix(in srgb, var(--green) 72%, transparent) 0%,
+    color-mix(in srgb, var(--green) 52%, transparent) 50%,
+    color-mix(in srgb, var(--green) 100%, transparent) 100%
   );
   z-index: 0;
 }
 
-.hero-decor {
+.hero-initial {
   position: absolute;
-  inset: 0;
+  font-family: 'Imperial Script', cursive;
+  font-size: 420px;
+  line-height: 1;
+  color: #fff;
+  opacity: 0.02;
   pointer-events: none;
   z-index: 1;
+  user-select: none;
 }
 
-.hero-decor svg { position: absolute; }
-.decor-tl { top: -20px; left: -20px; width: 300px; opacity: 0.18; }
-.decor-br { bottom: -20px; right: -20px; width: 300px; opacity: 0.18; transform: rotate(180deg); }
+.hero-initial--tl {
+  top: -60px;
+  left: -140px;
+}
 
-.hero > *:not(.hero-overlay):not(.hero-decor):not(.scroll-hint) {
+.hero-initial--br {
+  bottom: -60px;
+  right: 40px;
+}
+
+.hero > *:not(.hero-overlay):not(.hero-initial):not(.scroll-hint) {
   position: relative;
   z-index: 2;
 }
@@ -518,7 +530,7 @@ body::before {
    ════════════════════════════════════════════════════ */
 .invite-section {
   background: var(--cream-dark);
-  padding: 88px 24px;
+  padding: 180px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -541,7 +553,7 @@ body::before {
   width: 100%;
   max-width: 580px;
   background: var(--white);
-  padding: 100px 56px 60px;
+  padding: 80px 56px 60px;
   text-align: center;
   box-shadow:
     0 2px 0 rgba(255,255,255,0.7) inset,
@@ -565,11 +577,11 @@ body::before {
   position: absolute;
   top: 0; left: 50%;
   transform: translate(-50%, -52%);
-  width: 150px; height: 150px;
+  width: 110px; height: 110px;
   margin: 0;
   display: flex; align-items: center; justify-content: center;
   z-index: 2;
-  filter: drop-shadow(0 4px 12px rgba(44,37,32,0.22));
+  /*filter: drop-shadow(0 4px 12px rgba(44,37,32,0.22));*/
 }
 
 .invite-seal img {
@@ -672,7 +684,7 @@ body::before {
    GREEN QUOTE BAND
    ════════════════════════════════════════════════════ */
 .green-band {
-  background: var(--green);
+  background: var(--green-mid);
   padding: 110px 56px;
   text-align: center;
   position: relative;
@@ -720,7 +732,7 @@ body::before {
    DETAILS — CARDS
    ════════════════════════════════════════════════════ */
 .details-section {
-  background: var(--cream-dark);
+  background: var(--cream);
   padding: 88px 24px;
   position: relative;
 }
@@ -774,7 +786,7 @@ body::before {
   background: var(--orange);
 }
 
-.detail-card.stripe-green::before { background: var(--green); }
+/*.detail-card.stripe-green::before { background: var(--green); }*/
 
 .detail-card--flat {
   background: transparent;
@@ -814,10 +826,10 @@ body::before {
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--orange);
   cursor: pointer;
   background: none;
-  border: 1px solid var(--ink-light);
+  border: 1px solid var(--orange-light);
   font-family: 'Lora', serif;
   text-decoration: none;
   transition: border-color 0.2s, color 0.2s;
@@ -888,7 +900,7 @@ body::before {
   -webkit-appearance: none;
 }
 
-.form-group input::placeholder { color: rgba(255,255,255,0.28); }
+.form-group input::placeholder { color: var(--white); }
 
 .form-group input:focus,
 .form-group select:focus {
@@ -932,7 +944,7 @@ body::before {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(20,30,10,0.82);
+  background: color-mix(in srgb, var(--green) 80%, transparent);
   backdrop-filter: blur(6px);
   z-index: 900;
   display: flex;
@@ -1013,7 +1025,7 @@ body::before {
    ════════════════════════════════════════════════════ */
 footer {
   background: var(--green);
-  padding: 60px 24px 44px;
+  padding: 140px 24px 180px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -1024,6 +1036,26 @@ footer {
   width: 260px;
   max-width: 90%;
   margin: 0 auto 28px;
+  position: relative;
+  z-index: 1;
+}
+
+footer p {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-decor-bg {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  object-fit: contain;
+  opacity: 0.06;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 
@@ -1056,12 +1088,14 @@ footer {
    RESPONSIVE
    ════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
-  .details-inner { gap: 16px; }
+  .details-inner { gap: 40px; }
   .dress-grid    { grid-template-columns: 1fr; }
   .overlay-card  { padding: 40px 22px; }
-  .invite-paper  { padding: 44px 28px; transform: rotate(0); }
+  .invite-paper  { padding: 120px 28px; transform: rotate(0); }
   .polaroid      { transform: rotate(0); max-width: 320px; }
   .hero          { background-position: center 15%; }
+  .hero-initial--tl { top: -60px;left: -300px;}
+  .hero-initial--br {bottom: -60px; right: -50px;}
 }
 
 @media (max-width: 420px) {

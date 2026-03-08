@@ -14,34 +14,9 @@
 <section class="hero">
   <div class="hero-overlay"></div>
 
-  <!-- Botanical corner decorations -->
-  <div class="hero-decor">
-    <!-- top-left branch -->
-    <svg class="decor-tl" viewBox="0 0 300 300" fill="none">
-      <path d="M10 290 C 50 220, 80 160, 145 115 C 185 85, 225 65, 268 22" stroke="#fff" stroke-width="1.5" fill="none"/>
-      <path d="M70 205 C 100 168, 132 150, 155 125" stroke="#fff" stroke-width="1" fill="none"/>
-      <ellipse cx="158" cy="121" rx="15" ry="8" fill="#fff" opacity="0.45" transform="rotate(-30 158 121)"/>
-      <ellipse cx="96" cy="197" rx="13" ry="7" fill="#fff" opacity="0.38" transform="rotate(20 96 197)"/>
-      <ellipse cx="148" cy="112" rx="11" ry="6" fill="#fff" opacity="0.3" transform="rotate(-55 148 112)"/>
-      <path d="M132 150 C 158 140, 174 125, 190 105" stroke="#fff" stroke-width="1" fill="none"/>
-      <ellipse cx="193" cy="101" rx="13" ry="7" fill="#fff" opacity="0.4" transform="rotate(-40 193 101)"/>
-      <circle cx="268" cy="22" r="5" fill="#fff" opacity="0.35"/>
-      <ellipse cx="215" cy="76" rx="12" ry="6" fill="#fff" opacity="0.35" transform="rotate(-20 215 76)"/>
-      <!-- small leaves -->
-      <ellipse cx="110" cy="175" rx="9" ry="5" fill="#fff" opacity="0.28" transform="rotate(35 110 175)"/>
-      <ellipse cx="175" cy="132" rx="10" ry="5" fill="#fff" opacity="0.3" transform="rotate(-15 175 132)"/>
-    </svg>
-    <!-- bottom-right (mirrored) -->
-    <svg class="decor-br" viewBox="0 0 300 300" fill="none">
-      <path d="M10 290 C 50 220, 80 160, 145 115 C 185 85, 225 65, 268 22" stroke="#fff" stroke-width="1.5" fill="none"/>
-      <path d="M70 205 C 100 168, 132 150, 155 125" stroke="#fff" stroke-width="1" fill="none"/>
-      <ellipse cx="158" cy="121" rx="15" ry="8" fill="#fff" opacity="0.45" transform="rotate(-30 158 121)"/>
-      <ellipse cx="96" cy="197" rx="13" ry="7" fill="#fff" opacity="0.38" transform="rotate(20 96 197)"/>
-      <path d="M132 150 C 158 140, 174 125, 190 105" stroke="#fff" stroke-width="1" fill="none"/>
-      <ellipse cx="193" cy="101" rx="13" ry="7" fill="#fff" opacity="0.4" transform="rotate(-40 193 101)"/>
-      <ellipse cx="215" cy="76" rx="12" ry="6" fill="#fff" opacity="0.35" transform="rotate(-20 215 76)"/>
-    </svg>
-  </div>
+  <!-- Background decorative initials -->
+  <span class="hero-initial hero-initial--tl" aria-hidden="true">M</span>
+  <span class="hero-initial hero-initial--br" aria-hidden="true">R</span>
 
   <p class="hero-eyebrow">Nos casamos</p>
   <div class="hero-line"></div>
@@ -213,7 +188,7 @@
       <img src="images/champagne.png" alt="" class="detail-card-img">
       <h3 class="detail-heading">Lugar de Celebración</h3>
       <p class="detail-text">
-        <strong style="color:#2a2018">Casa Raíces Cancún</strong>
+        Casa Raíces Cancún
       </p>
       <a class="card-trigger" href="https://maps.google.com/?q=Casa+Raices+Cancun,+SM+313+MZ+280+LT+5,+Calle+Alamos,+77533+Cancun,+Q.R.,+Mexico" target="_blank">Ir a Google Maps</a>
     </div>
@@ -223,7 +198,7 @@
       <img src="images/hanger.webp" alt="" class="detail-card-img">
       <h3 class="detail-heading">Código de Vestir</h3>
       <p class="detail-text">
-        <strong style="color:#2a2018">Cocktail</strong>
+        Cocktail
       </p>
       <button class="card-trigger" onclick="openOverlay()">¿Cómo vestirse?</button>
     </div>
@@ -245,8 +220,8 @@
     </p>
 
     <div class="success-msg" id="successMsg">
-      <span class="emoji">🌿</span>
-      <h3>¡Gracias, nos alegras el día!</h3>
+      <span class="emoji">🥂</span>
+      <h3 id="successTitle">¡Gracias, nos alegras el día!</h3>
       <p id="successText">Tu confirmación fue recibida.</p>
     </div>
 
@@ -286,7 +261,8 @@
 
 <!-- ══════════ FOOTER ══════════ -->
 <footer>
-  <svg class="footer-botanical" viewBox="0 0 260 28" fill="none">
+  <img src="images/mono.svg" alt="" class="footer-decor-bg" aria-hidden="true">
+  <!-- <svg class="footer-botanical" viewBox="0 0 260 28" fill="none">
     <line x1="0" y1="18" x2="98" y2="18" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
     <line x1="162" y1="18" x2="260" y2="18" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
     <path d="M103 18 C101 14, 98 10, 95 8" stroke="rgba(255,255,255,0.35)" stroke-width="0.8" stroke-linecap="round" fill="none"/>
@@ -296,7 +272,7 @@
     <path d="M157 18 C159 14, 162 10, 165 8" stroke="rgba(255,255,255,0.35)" stroke-width="0.8" stroke-linecap="round" fill="none"/>
     <ellipse cx="167" cy="6" rx="5.5" ry="2.5" fill="rgba(255,255,255,0.25)" transform="rotate(28 167 6)"/>
     <circle cx="130" cy="19" r="1.8" fill="rgba(255,255,255,0.38)"/>
-  </svg>
+  </svg>-->
   <!-- <span class="footer-names">Miren &amp; Randy</span> -->
   <img src="images/wax-seal.png" alt="Miren & Randy" class="footer-seal">
   <p>01 · 04 · 2026 · Cancún, México</p>
@@ -314,17 +290,17 @@
 
     <div class="dress-grid">
       <div class="dress-item">
-        <span class="dress-item-icon">👗</span>
+        <span class="dress-item-icon">👠</span>
         <h4 class="dress-item-title">Para ellas</h4>
         <p class="dress-item-desc">Vestido midi o debajo de la rodilla, jumpsuit elegante, o conjunto de falda y blusa sofisticada. Tacones, sandalias o flats elegantes.</p>
       </div>
       <div class="dress-item">
-        <span class="dress-item-icon">🕴</span>
+        <span class="dress-item-icon">👞</span>
         <h4 class="dress-item-title">Para ellos</h4>
         <p class="dress-item-desc">Traje completo o blazer con pantalón de vestir. Camisa con o sin corbata. Zapatos de cuero. El saco es bienvenido.</p>
       </div>
       <div class="dress-item" style="grid-column: 1 / -1">
-        <span class="dress-item-icon">🚫</span>
+        <span class="dress-item-icon">😬</span>
         <h4 class="dress-item-title">Mejor evitar</h4>
         <p class="dress-item-desc">Ropa casual (jeans, tenis), ropa de playa, looks muy informales. Tampoco blanco ni crema en vestidos — ese color es de la novia 😉</p>
       </div>
@@ -394,9 +370,10 @@ async function submitRSVP(e) {
 
     if (asistencia === 'si') {
       const extra = extraGuests > 0 ? ` (y ${extraGuests} acompañante${extraGuests > 1 ? 's' : ''})` : '';
-      document.getElementById('successText').textContent = `¡${nombre}, nos alegra mucho que vengas${extra}! Te esperamos el 1 de Abril. 🌸`;
+      document.getElementById('successText').textContent = `¡${nombre}, nos alegra mucho que vengas${extra}! Te esperamos el 1 de Abril ✨ `;
     } else {
-      document.getElementById('successText').textContent = `Entendemos, ${nombre}. Te llevaremos en el pensamiento ese día.`;
+      document.getElementById('successTitle').textContent = 'Te tendremos en el pensamiento';
+      document.getElementById('successText').textContent = `Entendemos, ${nombre}. Te llevaremos en el corazón ese día.`;
     }
   } catch {
     showError('Hubo un problema al enviar. Por favor intenta de nuevo.');
