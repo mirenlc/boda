@@ -284,8 +284,8 @@ body::before {
   font-family: 'Imperial Script', cursive;
   font-size: 420px;
   line-height: 1;
-  color: #fff;
-  opacity: 0.02;
+  color: #000;
+  opacity: 0.08;
   pointer-events: none;
   z-index: 1;
   user-select: none;
@@ -301,9 +301,52 @@ body::before {
   right: 40px;
 }
 
-.hero > *:not(.hero-overlay):not(.hero-initial):not(.scroll-hint) {
+.hero > *:not(.hero-overlay):not(.hero-initial):not(.scroll-hint):not(.custom-shape-divider-bottom-1772970175) {
   position: relative;
   z-index: 2;
+}
+
+.custom-shape-divider-bottom-1772970175 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 3;
+}
+
+.custom-shape-divider-bottom-1772970175 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 52px;
+}
+
+.custom-shape-divider-bottom-1772970175 .shape-fill {
+  fill: var(--cream-dark);
+}
+
+.custom-shape-divider-top-1772970201 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+  z-index: 3;
+}
+
+.custom-shape-divider-top-1772970201 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 42px;
+}
+
+.custom-shape-divider-top-1772970201 .shape-fill {
+  fill: var(--cream);
 }
 
 .hero-eyebrow { margin-bottom: 20px; animation: fadeUp 1s ease both; }
@@ -530,22 +573,13 @@ body::before {
    ════════════════════════════════════════════════════ */
 .invite-section {
   background: var(--cream-dark);
+  height: 100vh;
   padding: 180px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-}
-
-/* torn top edge */
-.invite-section::before {
-  content: '';
-  position: absolute;
-  top: -1px; left: 0; right: 0;
-  height: 22px;
-  background: var(--green);
-  clip-path: polygon(0 0,100% 0,100% 45%,98% 65%,95% 35%,92% 70%,89% 40%,86% 75%,83% 40%,80% 68%,77% 35%,74% 72%,71% 42%,68% 70%,65% 38%,62% 72%,59% 42%,56% 75%,53% 40%,50% 68%,47% 35%,44% 72%,41% 42%,38% 70%,35% 38%,32% 72%,29% 42%,26% 75%,23% 40%,20% 68%,17% 35%,14% 72%,11% 40%,8% 70%,5% 38%,2% 72%,0 45%);
 }
 
 .invite-paper {
@@ -606,10 +640,39 @@ body::before {
    ════════════════════════════════════════════════════ */
 .photos-section {
   background: var(--cream);
-  padding: 88px 24px 100px;
+  height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   position: relative;
   overflow: hidden;
+}
+
+.photos-vine {
+  position: absolute;
+  width: auto;
+  max-height: 100%;
+  top: 0;
+  max-width: 30vw;
+  height: auto;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.photos-vine--left {
+  left: 0;
+  rotate: 5deg;
+}
+
+.photos-vine--right {
+  right: 0;
+  transform: scaleX(-1);
+  top: auto;
+  bottom: 0;
 }
 
 
@@ -684,16 +747,20 @@ body::before {
    GREEN QUOTE BAND
    ════════════════════════════════════════════════════ */
 .green-band {
-  background: var(--green-mid);
-  padding: 110px 56px;
+  background: var(--green);
+  padding: 56px;
   text-align: center;
   position: relative;
   overflow: hidden;
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .green-band-quote {
   font-family: 'Lora', serif;
-  font-size: clamp(20px, 2vw, 38px);
+  font-size: clamp(20px, 2vw, 24px);
   color: rgba(255,255,255,0.88);
   font-weight: 400;
   position: relative;
@@ -702,11 +769,10 @@ body::before {
   margin: 0 auto;
   line-height: 1.4;
   font-style: italic;
-}
-
-.green-band-quote em {
-  color: var(--orange-light);
-  font-style: normal;
+  vertical-align: middle;
+  text-align: center;
+  padding: 40px;
+  
 }
 
 .green-band-floral {
@@ -735,15 +801,29 @@ body::before {
   background: var(--cream);
   padding: 88px 24px;
   position: relative;
+  overflow: hidden;
 }
 
-.details-section::before {
-  content: '';
+.details-initial {
   position: absolute;
-  bottom: -1px; left: 0; right: 0;
-  height: 22px;
-  background: var(--green);
-  clip-path: polygon(0 100%,100% 100%,100% 55%,98% 35%,95% 65%,92% 30%,89% 60%,86% 25%,83% 60%,80% 32%,77% 65%,74% 28%,71% 58%,68% 30%,65% 62%,62% 28%,59% 58%,56% 25%,53% 60%,50% 32%,47% 65%,44% 28%,41% 58%,38% 30%,35% 62%,32% 28%,29% 58%,26% 25%,23% 60%,20% 32%,17% 65%,14% 28%,11% 60%,8% 30%,5% 62%,2% 28%,0 55%);
+  font-family: 'Imperial Script', cursive;
+  font-size: 420px;
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+
+.details-initial--tl {
+  top: -60px;
+  left: -40px;
+}
+
+.details-initial--br {
+  bottom: -60px;
+  right: -40px;
 }
 
 .details-header {
@@ -766,24 +846,20 @@ body::before {
   padding: 44px 24px 56px;
   text-align: center;
   position: relative;
-  box-shadow: 0 2px 16px rgba(44,37,32,0.07);
+  box-shadow: none;
+  border: 1px solid var(--green);
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .detail-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 32px rgba(44,37,32,0.13);
 }
 
 .detail-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--orange);
+  display: none;
 }
 
 /*.detail-card.stripe-green::before { background: var(--green); }*/
@@ -791,9 +867,32 @@ body::before {
 .detail-card--flat {
   background: transparent;
   box-shadow: none;
+  border: none;
 }
 .detail-card--flat::before { display: none; }
 .detail-card--flat:hover { transform: none; box-shadow: none; }
+
+.detail-card--paper {
+  background: transparent;
+  border: none;
+  border-radius: 16px;
+}
+
+.card-dash-border {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.card-dash-border rect {
+  fill: none;
+  stroke: var(--orange-light);
+  stroke-width: 1;
+  stroke-dasharray: 5 10;
+}
 
 .details-inner > :nth-child(2).detail-card--paper { transform: rotate(-1.2deg); }
 .details-inner > :nth-child(3).detail-card--paper { transform: rotate(1deg); }
@@ -968,7 +1067,6 @@ body::before {
   transition: transform 0.4s ease;
   max-height: 88vh;
   overflow-y: auto;
-  border-top: 4px solid var(--orange);
 }
 
 .overlay.open .overlay-card { transform: translateY(0); }
@@ -1097,6 +1195,7 @@ footer p {
   .hero-initial--tl { top: -60px;left: -300px;}
   .hero-initial--br {bottom: -60px; right: -50px;}
 }
+
 
 @media (max-width: 420px) {
   .hero-names { font-size: 58px; }
