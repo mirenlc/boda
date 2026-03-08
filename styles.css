@@ -306,62 +306,76 @@ body::before {
 .hero-names { animation: fadeUp 1s ease 0.18s both; }
 .hero-ampersand { animation: fadeUp 1s ease 0.28s both; }
 
-.hero-date-badge {
-  margin: 28px auto 0;
-  width: clamp(260px, 55vw, 380px);
-  color: rgba(255,255,255,0.85);
+.hero-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 26px auto 18px;
   animation: fadeUp 1s ease 0.38s both;
+  width: fit-content;
 }
 
-.hero-date-month {
+.hero-divider-line { width: 44px; height: 1px; background: rgba(255,255,255,0.3); }
+.hero-botanical { flex-shrink: 0; }
+.hero-date { animation: fadeUp 1s ease 0.48s both; }
+
+/* ── Date badge (Fecha & Hora detail card) ── */
+.date-badge {
+  width: 100%;
+  color: var(--ink);
+  margin: 8px 0 4px;
+}
+
+.date-badge-month {
   font-family: 'Lora', serif;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   text-align: center;
-  margin-bottom: 10px;
-  opacity: 0.75;
+  margin-bottom: 8px;
+  opacity: 0.55;
 }
 
-.hero-date-rule {
+.date-badge-rule {
   height: 1px;
-  background: rgba(255,255,255,0.28);
+  background: rgba(44,37,32,0.18);
 }
 
-.hero-date-row {
+.date-badge-row {
   display: flex;
   align-items: center;
-  padding: 6px 12px;
-  gap: 10px;
+  padding: 4px 8px;
+  gap: 8px;
 }
 
-.hero-date-label {
+.date-badge-label {
   font-family: 'Lora', serif;
   font-size: 9px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   white-space: nowrap;
-  opacity: 0.8;
+  opacity: 0.65;
 }
 
-.hero-date-center {
+.date-badge-center {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex: 1;
 }
 
-.hero-date-center-line {
+.date-badge-line {
   flex: 1;
   height: 1px;
-  background: rgba(255,255,255,0.28);
+  background: rgba(44,37,32,0.18);
 }
 
-.hero-date-num {
+.date-badge-num {
   font-family: 'Imperial Script', cursive;
-  font-size: 68px;
+  font-size: 56px;
   line-height: 1;
   font-weight: 400;
+  color: var(--ink);
 }
 
 .hero-cta {
