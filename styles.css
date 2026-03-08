@@ -531,11 +531,11 @@ body::before {
 }
 
 .polaroid-caption {
-  font-family: 'Imperial Script', cursive;
+  font-family: 'Miniver', cursive;
   font-size: 22px;
   color: var(--ink-light);
   text-align: center;
-  margin-top: 10px;
+  margin-top: 3px;
   font-weight: 400;
   position: absolute;
   bottom: 16px;
@@ -550,8 +550,8 @@ body::before {
   z-index: 2;
 }
 
-.tape-tl { top: -7px; left: 18px; transform: rotate(-20deg); }
-.tape-br { bottom: 30px; right: 10px; transform: rotate(5deg); }
+.tape-tl { top: 0px; left: -15px; transform: rotate(-40deg); }
+.tape-br { bottom: 0px; right: -15px; transform: rotate(-40deg); }
 
 
 /* ════════════════════════════════════════════════════
