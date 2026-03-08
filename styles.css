@@ -517,10 +517,14 @@ body::before {
   margin: 0 auto;
   transition: transform 0.5s ease;
   position: relative;
-  overflow: hidden;
 }
 
 .polaroid:hover { transform: rotate(0deg); }
+
+.polaroid-img-wrap {
+  overflow: hidden;
+  width: 100%;
+}
 
 .polaroid img {
   width: 100%;
@@ -530,7 +534,6 @@ body::before {
   display: block;
   filter: sepia(0.06) contrast(1.03) brightness(0.98);
   transition: transform 0.5s ease;
-  overflow: hidden;
 }
 
 .polaroid:hover img {
