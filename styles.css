@@ -120,9 +120,11 @@ body {
 
 .detail-text {
   font-family: 'Lora', serif;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.9;
   color: var(--ink-light);
+  font-style: italic;
+
 }
 
 .btn {
@@ -443,7 +445,7 @@ body::before {
   position: relative;
   width: 100%;
   max-width: 580px;
-  /*background: url('images/paper.png') center center / cover no-repeat;*/
+  background: var(--white);
   padding: 60px 56px;
   text-align: center;
   box-shadow:
@@ -477,7 +479,7 @@ body::before {
 }
 
 .invite-rule {
-  width: 36px; height: 1.5px;
+  width: 36px; height: 0px;
   background: var(--orange);
   margin: 18px auto;
 }
@@ -570,20 +572,20 @@ body::before {
    ════════════════════════════════════════════════════ */
 .green-band {
   background: var(--green);
-  padding: 52px 24px;
+  padding: 110px 56px;
   text-align: center;
   position: relative;
   overflow: hidden;
 }
 
 .green-band-quote {
-  font-family: 'Imperial Script', cursive;
-  font-size: clamp(22px, 4.5vw, 38px);
+  font-family: 'Lora', serif;
+  font-size: clamp(20px, 2vw, 38px);
   color: rgba(255,255,255,0.88);
   font-weight: 400;
   position: relative;
   z-index: 1;
-  max-width: 680px;
+  max-width: 500px;
   margin: 0 auto;
   line-height: 1.4;
 }
@@ -604,13 +606,13 @@ body::before {
 .green-band-floral-br { bottom: -20px; right: -20px; transform: rotate(180deg); }
 
 /* orange accent line */
-.green-band-line {
+/*.green-band-line {
   width: 36px; height: 2px;
   background: var(--orange-light);
   margin: 16px auto 0;
   position: relative; z-index: 1;
 }
-
+*/
 
 /* ════════════════════════════════════════════════════
    DETAILS — CARDS
@@ -676,6 +678,14 @@ body::before {
   width: 64px; height: 64px;
   margin-bottom: 18px;
   display: flex; align-items: center; justify-content: center;
+}
+
+.detail-card-img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin: 0 auto 16px;
+  display: block;
 }
 
 .detail-heading { margin-bottom: 10px; }
