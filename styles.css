@@ -12,7 +12,7 @@
   --green-mid:     #3A5847;
   --green-light:   #798869;
   --orange:        #A53E24;
-  --orange-light:  #F3AB99;
+  --orange-light:  #ec846a;
   --cream:         #f7f3ec;
   --cream-dark:    #ede6d8;
   --paper:         #f2ece0;
@@ -179,6 +179,15 @@ footer {
   margin-bottom: 8px;
   line-height: 1;
   text-transform: none;
+}
+
+.footer-seal {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  opacity: 0.85;
+  display: block;
+  margin: 0 auto 12px;
 }
 
 .overlay-title {
@@ -531,8 +540,8 @@ body::before {
 }
 
 .polaroid-caption {
-  font-family: 'Miniver', cursive;
-  font-size: 22px;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 16px;
   color: var(--ink-light);
   text-align: center;
   margin-top: 3px;
@@ -595,7 +604,7 @@ body::before {
 /* orange accent line */
 .green-band-line {
   width: 36px; height: 2px;
-  background: var(--orange);
+  background: var(--orange-light);
   margin: 16px auto 0;
   position: relative; z-index: 1;
 }
@@ -890,7 +899,7 @@ footer::before {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--green), var(--orange), var(--green));
+  background: linear-gradient(90deg, var(--green), var(--green-mid), var(--green));
 }
 
 
