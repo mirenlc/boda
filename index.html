@@ -53,7 +53,7 @@
   <span class="hero-initial hero-initial--br" aria-hidden="true">R</span>
 
   <p class="hero-eyebrow">Nos casamos</p>
-  <div class="hero-line"></div>
+  <!--<div class="hero-line"></div> -->
 
   <h1 class="hero-names">
     <span>Miren</span>
@@ -74,7 +74,7 @@
     <div class="hero-divider-line"></div>
   </div>
 
-  <p class="hero-date">Miércoles · 01 de Abril · 2026</p>
+  <p class="hero-date">Miércoles · 01 de Abril 2026</p>
 
   <div class="hero-countdown" id="heroCountdown">
     <div class="countdown-item">
@@ -99,7 +99,7 @@
   </div>
 
   <div class="hero-cta">
-    <a href="#rsvp" class="btn"><span>Confirmar asistencia</span></a>
+    <a href="#rsvp" class="btn btn-orange"><span>Confirmar asistencia</span></a>
   </div>
 
   <div class="scroll-hint">bajar</div>
@@ -125,7 +125,7 @@
     <div class="invite-rule"></div>
 
     <blockquote class="invite-quote">
-      Con mucha emoción, queremos invitarte <br>a nuestra boda civil.
+      Con mucha emoción, queremos invitarte a nuestra boda civil.
     </blockquote>
 
     <div class="invite-rule"></div>
@@ -293,13 +293,13 @@
       </div>
 
       <div class="form-group" id="guestGroup" style="display:none">
-        <label>¿Cuántas personas adicionales te acompañan?</label>
+        <label>¿Cuántas personas van en total?</label>
         <select id="guests">
-          <option value="0">Solo yo</option>
-          <option value="1">+1 persona</option>
-          <option value="2">+2 personas</option>
-          <option value="3">+3 personas</option>
-          <option value="4">+4 personas</option>
+          <option value="1">1 persona (solo yo)</option>
+          <option value="2">2 personas</option>
+          <option value="3">3 personas</option>
+          <option value="4">4 personas</option>
+          <option value="5">5 personas</option>
         </select>
       </div>
 
@@ -391,8 +391,8 @@ async function submitRSVP(e) {
 
   const nombre      = document.getElementById('nombre').value.trim();
   const asistencia  = document.getElementById('asistencia').value;
-  const extraGuests = asistencia === 'si' ? parseInt(document.getElementById('guests').value) : 0;
-  const totalGuests = asistencia === 'si' ? extraGuests + 1 : 0;
+  const totalGuests = asistencia === 'si' ? parseInt(document.getElementById('guests').value) : 0;
+  const extraGuests = totalGuests - 1;
 
   const names = getNames();
   if (names.includes(nombre.toLowerCase())) {
@@ -420,8 +420,8 @@ async function submitRSVP(e) {
     document.getElementById('successMsg').classList.add('show');
 
     if (asistencia === 'si') {
-      const extra = extraGuests > 0 ? ` (y ${extraGuests} acompañante${extraGuests > 1 ? 's' : ''})` : '';
-      document.getElementById('successText').textContent = `¡${nombre}, nos alegra mucho que vengas${extra}! Te esperamos el 1 de Abril ✨ `;
+      const extra = extraGuests > 0 ? ` (con ${extraGuests} acompañante${extraGuests > 1 ? 's' : ''})` : '';
+      document.getElementById('successText').textContent = `¡${nombre}, nos alegra mucho que vengan${extra}! Te esperamos el 1 de Abril ✨`;
     } else {
       document.getElementById('successEmoji').textContent = '❤️‍🩹';
       document.getElementById('successTitle').textContent = 'Te tendremos en el pensamiento';
@@ -476,6 +476,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay
 
 // Envelope intro
 document.getElementById('env-open-btn').addEventListener('click', function() {
+  this.classList.add('clicked');
   document.getElementById('envelope').classList.replace('close', 'open');
   setTimeout(() => {
     const loader = document.getElementById('env-loader');
@@ -487,7 +488,7 @@ document.getElementById('env-open-btn').addEventListener('click', function() {
         setTimeout(() => { loader.style.display = 'none'; }, 700);
       }, 700);
     }, 800);
-  }, 2600);
+  }, 4600);
 });
 
 // Paper + seal animation — observe the section (paper starts off-screen, so clipped)

@@ -11,6 +11,7 @@
   --green-mid:     #3A5847;
   --green-light:   #798869;
   --orange:        #A53E24;
+  --orange-dark:   #7F2A15;
   --orange-light:  #ec846a;
   --cream:         #f7f3ec;
   --cream-dark:    #ede6d8;
@@ -36,7 +37,7 @@ body {
   font-weight: 400;
   line-height: 0.95;
   color: var(--white);
-  letter-spacing: -1px;
+  transform: translateX(-28px); /* optical correction for script ornaments */
 }
 
 .hero-names span { display: block; }
@@ -376,8 +377,9 @@ body::before {
 .hero-countdown {
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   gap: 14px;
-  margin: 60px 0px;
+  margin: 60px auto;
   animation: fadeUp 1s ease 0.58s both;
 }
 
@@ -477,6 +479,8 @@ body::before {
 
 .hero-cta {
   margin-top: 36px;
+  display: flex;
+  justify-content: center;
   animation: fadeUp 1s ease 0.6s both;
 }
 
@@ -550,8 +554,8 @@ body::before {
   background: var(--orange);
 }
 
-.btn-orange::before { background: var(--green); }
-.btn-orange:hover { border-color: var(--green); }
+.btn-orange::before { background: var(--orange-dark); }
+.btn-orange:hover { border-color: var(--orange-dark); }
 
 .btn-loading { pointer-events: none; opacity: 0.65; }
 .btn-loading span::after {
@@ -763,6 +767,9 @@ body::before {
    ════════════════════════════════════════════════════ */
 .green-band {
   background: var(--green);
+  background-image: url('images/caminando.png');
+  background-size: cover;
+  background-position: center;
   padding: 56px;
   text-align: center;
   position: sticky;
@@ -773,6 +780,14 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.green-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--green) 80%, transparent);
+  z-index: 0;
 }
 
 .green-band-quote {
@@ -1311,8 +1326,10 @@ footer p {
   letter-spacing: 0.14em;
   position: relative;
   overflow: hidden;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  transition: color 0.3s ease, border-color 0.3s ease, opacity 0.5s ease;
 }
+
+#env-open-btn.clicked { opacity: 0; pointer-events: none; }
 
 #env-open-btn::before {
   content: '';
@@ -1338,13 +1355,13 @@ footer p {
   height: 100%;
   opacity: 0;
   z-index: 2;
-  transition: transform 0.8s ease-out 0.4s,
-              opacity 0.3s ease 0.4s;
+  transition: transform 1.6s ease-out 1.0s,
+              opacity 0.4s ease 1.0s;
 }
 
 #envelope.open .letter {
   opacity: 1;
-  transform: translateY(-10px);
+  transform: translateY(-20px);
 }
 
 .letter-invite-img {
@@ -1377,11 +1394,11 @@ footer p {
 
 #envelope.open .leaf { animation-fill-mode: both; }
 
-#envelope.open .l1 { animation: leafFloat1 1.4s ease 0.6s forwards; }
-#envelope.open .l2 { animation: leafFloat2 1.6s ease 0.7s forwards; }
-#envelope.open .l3 { animation: leafFloat3 1.3s ease 0.55s forwards; }
-#envelope.open .l4 { animation: leafFloat4 1.5s ease 0.8s forwards; }
-#envelope.open .l5 { animation: leafFloat5 1.4s ease 0.65s forwards; }
+#envelope.open .l1 { animation: leafFloat1 1.4s ease 2.6s forwards; }
+#envelope.open .l2 { animation: leafFloat2 1.6s ease 2.7s forwards; }
+#envelope.open .l3 { animation: leafFloat3 1.3s ease 2.55s forwards; }
+#envelope.open .l4 { animation: leafFloat4 1.5s ease 2.8s forwards; }
+#envelope.open .l5 { animation: leafFloat5 1.4s ease 2.65s forwards; }
 
 @keyframes leafFloat1 {
   0%   { opacity:0; transform: translate(0,0)       rotate(0deg);   }
