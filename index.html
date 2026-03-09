@@ -269,42 +269,54 @@
       Por favor responde antes del <strong>27 de Marzo de 2026.</strong>
     </p>
 
-    <div class="success-msg" id="successMsg">
-      <span class="emoji" id="successEmoji">🥂</span>
-      <h3 id="successTitle">¡Gracias!</h3>
-      <p id="successText">Tu confirmación fue recibida.</p>
+    <!-- Step dots -->
+    <div class="rsvp-steps">
+      <div class="rsvp-step-dot active" id="dot1"></div>
+      <div class="rsvp-step-dot" id="dot2"></div>
+      <div class="rsvp-step-dot" id="dot3"></div>
     </div>
 
-    <div class="error-msg" id="errorMsg"></div>
-
-    <form id="rsvpForm" onsubmit="submitRSVP(event)">
-      <div class="form-group">
-        <label>Tu nombre</label>
-        <input type="text" id="nombre" placeholder="¿Cómo te llamas?" required>
+    <!-- Step 1: Family selection -->
+    <div id="rsvpStep1" class="rsvp-step-panel rsvp-animate-in">
+      <div class="rsvp-side-tabs">
+        <button class="rsvp-side-tab active" id="tabNovia" onclick="rsvpSetSide('novia')">Familia Novia</button>
+        <button class="rsvp-side-tab" id="tabNovio" onclick="rsvpSetSide('novio')">Familia Novio</button>
       </div>
+      <p class="rsvp-step-label">Selecciona tu familia</p>
+      <div class="rsvp-family-grid" id="familyGrid"></div>
+    </div>
 
-      <div class="form-group">
-        <label>¿Confirmas asistencia?</label>
-        <select id="asistencia" required onchange="toggleGuests(this.value)">
-          <option value="" disabled selected>Selecciona una opción</option>
-          <option value="si">Sí, ahí estaré 🎉</option>
-          <option value="no">No podré asistir</option>
-        </select>
+    <!-- Step 2: Member selection -->
+    <div id="rsvpStep2" class="rsvp-step-panel" style="display:none">
+      <p class="rsvp-step-label" id="step2Label"></p>
+      <div class="rsvp-guest-list" id="guestList"></div>
+      <div class="rsvp-plus-one">
+        <div class="plus-one-toggle" onclick="rsvpTogglePlusOne()">
+          <span class="plus-icon" id="plusOneIcon">+</span> Agregar a alguien más
+        </div>
+        <input type="text" id="plusOneInput" class="plus-one-input" placeholder="Nombre del invitado adicional..." style="display:none">
       </div>
-
-      <div class="form-group" id="guestGroup" style="display:none">
-        <label>¿Cuántas personas van en total?</label>
-        <select id="guests">
-          <option value="1">1 persona (solo yo)</option>
-          <option value="2">2 personas</option>
-          <option value="3">3 personas</option>
-          <option value="4">4 personas</option>
-          <option value="5">5 personas</option>
-        </select>
+      <div class="rsvp-divider"><span>✦</span></div>
+      <div class="btn-row">
+        <button class="btn-ghost-light" onclick="rsvpGoStep(1)">← Volver</button>
+        <button class="btn btn-orange rsvp-confirm-btn" id="rsvpConfirmBtn" onclick="rsvpSubmit()"><span id="rsvpBtnText">Confirmar asistencia</span></button>
       </div>
+      <div class="error-msg" id="rsvpErrorMsg"></div>
+    </div>
 
-      <button type="submit" class="btn btn-orange form-submit"><span id="btnText">Enviar confirmación</span></button>
-    </form>
+    <!-- Step 3: Success -->
+    <div id="rsvpStep3" class="rsvp-step-panel" style="display:none">
+      <div class="success-msg show">
+        <span class="emoji">🌿</span>
+        <h3>¡Qué emoción!</h3>
+        <p>Ya tenemos tu confirmación.<br>¡Los esperamos en Cancún!</p>
+        <div class="rsvp-confirmed-list" id="confirmedList"></div>
+      </div>
+      <div style="text-align:center;margin-top:20px">
+        <button class="btn-ghost-light" onclick="rsvpGoBackToStart()">Confirmar otra familia →</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -365,81 +377,316 @@
 
 
 <script>
-// ─── FORMSPREE CONFIG ─────────────────────────────────────────────
+// ─── RSVP — FAMILY FLOW ───────────────────────────────────────────
 const FORMSPREE_URL = 'https://formspree.io/f/xzdaagvl';
-const NAMES_KEY     = 'rsvp_names';
 
-function getNames() {
-  try { return JSON.parse(localStorage.getItem(NAMES_KEY) || '[]'); } catch { return []; }
-}
-function saveName(nombre) {
-  const names = getNames();
-  names.push(nombre.toLowerCase());
-  localStorage.setItem(NAMES_KEY, JSON.stringify(names));
-}
+const ABUELITOS = [
+  { id: 'abuelita_lida',   name: 'Lida',   shared: true },
+  { id: 'abuelito_leonel', name: 'Leonel', shared: true },
+];
 
-function toggleGuests(val) {
-  document.getElementById('guestGroup').style.display = val === 'si' ? 'block' : 'none';
-}
+const FAMILIES = [
+  { id: 'conrado_alarcon_marta',  label: 'Conrado Alarcón, Marta',  side: 'novia', members: [{ id: 'marta_ca', name: 'Marta' }, { id: 'leonel_ca', name: 'Leonel' }, ...ABUELITOS] },
+  { id: 'conrado_poxtam',         label: 'Conrado Poxtam',          side: 'novia', members: [{ id: 'alfonso_cp', name: 'Alfonso' }, { id: 'elizabeth_cp', name: 'Elizabeth' }, { id: 'alfonso_shalom_cp', name: 'Alfonso (Shalom)' }, { id: 'samir_cp', name: 'Samir' }, ...ABUELITOS] },
+  { id: 'conrado_priego',         label: 'Conrado Priego',          side: 'novia', members: [{ id: 'william_cpr', name: 'William' }, { id: 'carmen_cpr', name: 'Carmen' }, ...ABUELITOS] },
+  { id: 'conrado_palafox',        label: 'Conrado Palafox',         side: 'novia', members: [{ id: 'leonel_cpal', name: 'Leonel' }, { id: 'margarita_cpal', name: 'Margarita' }, { id: 'itzel_cpal', name: 'Itzel' }, ...ABUELITOS] },
+  { id: 'osorio_conrado',         label: 'Osorio Conrado',          side: 'novia', members: [{ id: 'honorio_oc', name: 'Honorio' }, { id: 'leticia_oc', name: 'Leticia' }, ...ABUELITOS] },
+  { id: 'lopez_conrado',          label: 'López Conrado',           side: 'novia', members: [{ id: 'hugo_lc', name: 'Hugo' }, { id: 'genoveva_lc', name: 'Genoveva' }, { id: 'diego_lc', name: 'Diego' }, { id: 'julian_lc', name: 'Julián' }, ...ABUELITOS] },
+  { id: 'conrado_alarcon_rudili', label: 'Conrado Alarcón, Rudili', side: 'novia', members: [{ id: 'rudili_car', name: 'Rudili' }, ...ABUELITOS] },
+  { id: 'basurto_hernandez',      label: 'Basurto Hernández',       side: 'novia', members: [{ id: 'luis_bh', name: 'Luis' }, { id: 'berenice_bh', name: 'Berenice' }, { id: 'danna_bh', name: 'Danna' }, { id: 'elaine_bh', name: 'Elaine' }, { id: 'adrian_bh', name: 'Adrián' }] },
+  { id: 'avila_conrado',          label: 'Ávila Conrado',           side: 'novia', members: [{ id: 'lida_ac', name: 'Lida' }, { id: 'marion_ac', name: 'Marion' }, { id: 'valentina_ac', name: 'Valentina' }] },
+  { id: 'orozco_conrado',         label: 'Orozco Conrado',          side: 'novia', members: [{ id: 'agustin_oc', name: 'Agustín' }] },
+  { id: 'osorio_lopez',           label: 'Osorio López',            side: 'novia', members: [{ id: 'osiel_ol', name: 'Osiel' }, { id: 'mariana_ol', name: 'Mariana' }, { id: 'geraldine_ol', name: 'Geraldine' }] },
+  { id: 'mezquita_conrado',       label: 'Mézquita Conrado',        side: 'novia', members: [{ id: 'raul_mc', name: 'Raúl' }, { id: 'tania_mc', name: 'Tania' }, { id: 'isabela_mc', name: 'Isabela' }, { id: 'alain_mc', name: 'Alain' }] },
+  { id: 'conrado_gasca',          label: 'Conrado Gasca',           side: 'novia', members: [{ id: 'pedro_cg', name: 'Pedro' }] },
+  { id: 'de_sousa_barros',        label: 'De Sousa Barros',         side: 'novio', members: [{ id: 'mary_gladys_dsb', name: 'Mary Gladys' }] },
+  { id: 'gomes_sech',             label: 'Gomes Sech',              side: 'novio', members: [{ id: 'ronny_gs', name: 'Ronny' }, { id: 'joel_gs', name: 'Joel' }] },
+  { id: 'gomes_echeverry',        label: 'Gomes Echeverry',         side: 'novio', members: [{ id: 'roy_ge', name: 'Roy' }, { id: 'karina_ge', name: 'Karina' }, { id: 'liam_ge', name: 'Liam' }, { id: 'mila_ge', name: 'Mila' }] },
+];
 
-async function submitRSVP(e) {
-  e.preventDefault();
-  const btn   = document.getElementById('btnText');
-  const btnEl = btn.closest('button');
-  btn.textContent = 'Enviando';
-  btnEl.classList.add('btn-loading');
+// Shared abuelito state (persists across family selections per session)
+const sharedConfirmed = {};
+// Families that have already submitted
+const submittedFamilies = new Set();
 
-  const nombre      = document.getElementById('nombre').value.trim();
-  const asistencia  = document.getElementById('asistencia').value;
-  const totalGuests = asistencia === 'si' ? parseInt(document.getElementById('guests').value) : 0;
-  const extraGuests = totalGuests - 1;
+// Hydrate from localStorage
+(function() {
+  try {
+    const ids = JSON.parse(localStorage.getItem('rsvp_submitted') || '[]');
+    ids.forEach(id => submittedFamilies.add(id));
+    const abuelos = JSON.parse(localStorage.getItem('rsvp_abuelitos') || '{}');
+    Object.assign(sharedConfirmed, abuelos);
+  } catch(e) {}
+})();
 
-  const names = getNames();
-  if (names.includes(nombre.toLowerCase())) {
-    showError(`"${nombre}" ya tiene una confirmación. Para cambios, habla con Miren o Randy.`);
-    return;
+let rsvpStep = 1;
+let rsvpSide = 'novia';
+let rsvpSelectedFamily = null;
+let rsvpChecked = {};
+let rsvpShowPlusOne = false;
+
+function rsvpShowToast(msg) {
+  let toast = document.getElementById('rsvpToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'rsvpToast';
+    toast.className = 'rsvp-toast';
+    document.body.appendChild(toast);
   }
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function rsvpAlreadyDone(id) {
+  const f = FAMILIES.find(f => f.id === id);
+  rsvpShowToast('El formulario de ' + f.label + ' ya fue llenado.');
+}
+
+function rsvpSetDots(step) {
+  [1,2,3].forEach(n => {
+    const dot = document.getElementById('dot' + n);
+    dot.className = 'rsvp-step-dot' + (n === step ? ' active' : n < step ? ' done' : '');
+  });
+}
+
+function rsvpGoStep(n) {
+  document.getElementById('rsvpStep' + rsvpStep).style.display = 'none';
+  rsvpStep = n;
+  const panel = document.getElementById('rsvpStep' + n);
+  panel.style.display = 'block';
+  panel.classList.remove('rsvp-animate-in');
+  void panel.offsetWidth;
+  panel.classList.add('rsvp-animate-in');
+  rsvpSetDots(n);
+}
+
+function rsvpSetSide(side) {
+  rsvpSide = side;
+  document.getElementById('tabNovia').className = 'rsvp-side-tab' + (side === 'novia' ? ' active' : '');
+  document.getElementById('tabNovio').className = 'rsvp-side-tab' + (side === 'novio' ? ' active' : '');
+  rsvpRenderFamilies();
+}
+
+function rsvpRenderFamilies() {
+  const grid = document.getElementById('familyGrid');
+  const list = FAMILIES.filter(f => f.side === rsvpSide);
+  const available = list.filter(f => !submittedFamilies.has(f.id));
+  const done      = list.filter(f =>  submittedFamilies.has(f.id));
+  grid.innerHTML = [
+    ...available.map(f =>
+      `<button class="rsvp-family-btn" onclick="rsvpSelectFamily('${f.id}')">${f.label}</button>`
+    ),
+    ...done.map(f =>
+      `<button class="rsvp-family-btn rsvp-family-btn--done" onclick="rsvpAlreadyDone('${f.id}')">
+        ${f.label}<span class="rsvp-done-check">✓</span>
+      </button>`
+    ),
+  ].join('');
+}
+
+function rsvpSelectFamily(id) {
+  rsvpSelectedFamily = FAMILIES.find(f => f.id === id);
+  rsvpChecked = {};
+  rsvpSelectedFamily.members.forEach(m => { if (!sharedConfirmed[m.id]) rsvpChecked[m.id] = true; });
+  document.getElementById('step2Label').textContent = '¿Quiénes de ' + rsvpSelectedFamily.label + ' asistirán?';
+  rsvpRenderGuests();
+  document.getElementById('plusOneInput').value = '';
+  document.getElementById('plusOneInput').style.display = 'none';
+  document.getElementById('plusOneIcon').textContent = '+';
+  rsvpShowPlusOne = false;
+  rsvpGoStep(2);
+}
+
+function rsvpRenderGuests() {
+  const regular = rsvpSelectedFamily.members.filter(m => !m.shared);
+  const shared  = rsvpSelectedFamily.members.filter(m =>  m.shared);
+  let html = '';
+
+  regular.forEach(m => {
+    const checked = rsvpChecked[m.id];
+    html += `<div class="rsvp-guest-item${checked ? ' checked' : ''}" onclick="rsvpToggleGuest('${m.id}')">
+      <div class="rsvp-checkbox">${checked ? '✓' : ''}</div>
+      <span class="rsvp-guest-name">${m.name}</span>
+    </div>`;
+  });
+
+  if (shared.length) {
+    html += `<div class="rsvp-guest-section-title">Abuelitos</div>`;
+    shared.forEach(m => {
+      const already = !!sharedConfirmed[m.id];
+      const checked = rsvpChecked[m.id] || already;
+      html += `<div class="rsvp-guest-item${already ? ' disabled' : checked ? ' checked' : ''}" onclick="rsvpToggleGuest('${m.id}')">
+        <div class="rsvp-checkbox">${checked ? '✓' : ''}</div>
+        <div style="flex:1">
+          <span class="rsvp-guest-name">${m.name}</span>
+          ${already ? `<div class="rsvp-guest-confirmed-by">Confirmado por ${sharedConfirmed[m.id]}</div>` : ''}
+        </div>
+        ${already ? '<span class="rsvp-guest-badge">✓ Confirmado</span>' : ''}
+      </div>`;
+    });
+  }
+
+  document.getElementById('guestList').innerHTML = html;
+}
+
+function rsvpToggleGuest(id) {
+  if (sharedConfirmed[id]) return;
+  rsvpChecked[id] = !rsvpChecked[id];
+  rsvpRenderGuests();
+}
+
+function rsvpTogglePlusOne() {
+  rsvpShowPlusOne = !rsvpShowPlusOne;
+  document.getElementById('plusOneInput').style.display = rsvpShowPlusOne ? 'block' : 'none';
+  document.getElementById('plusOneIcon').textContent = rsvpShowPlusOne ? '−' : '+';
+}
+
+async function rsvpSubmit() {
+  const plusOneName = document.getElementById('plusOneInput').value.trim();
+  const confirmed   = rsvpSelectedFamily.members.filter(m => rsvpChecked[m.id]);
+  if (!confirmed.length && !plusOneName) return;
+
+  const btn     = document.getElementById('rsvpConfirmBtn');
+  const btnText = document.getElementById('rsvpBtnText');
+  btnText.textContent = 'Enviando';
+  btn.classList.add('btn-loading');
+
+  confirmed.forEach(m => {
+    if (m.shared && !sharedConfirmed[m.id]) sharedConfirmed[m.id] = rsvpSelectedFamily.label;
+  });
+
+  const names = [...confirmed.map(m => m.name), ...(plusOneName ? [plusOneName] : [])];
 
   try {
     const res = await fetch(FORMSPREE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
-        nombre,
-        asistencia:         asistencia === 'si' ? 'Sí asistirá' : 'No asistirá',
-        acompanantes_extra: extraGuests,
-        total_personas:     totalGuests,
-        _subject:           `RSVP Boda · ${nombre}`
+        familia:        rsvpSelectedFamily.label,
+        lado:           rsvpSelectedFamily.side,
+        asistentes:     names.join(', '),
+        total_personas: names.length,
+        _subject:       'RSVP Boda · ' + rsvpSelectedFamily.label,
       })
     });
-
     if (!res.ok) throw new Error();
 
-    saveName(nombre);
-    document.getElementById('rsvpForm').style.display = 'none';
-    document.getElementById('successMsg').classList.add('show');
-
-    if (asistencia === 'si') {
-      const extra = extraGuests > 0 ? ` (con ${extraGuests} acompañante${extraGuests > 1 ? 's' : ''})` : '';
-      document.getElementById('successText').textContent = `¡${nombre}, nos alegra mucho que vengan${extra}! Te esperamos el 1 de Abril ✨`;
-    } else {
-      document.getElementById('successEmoji').textContent = '❤️‍🩹';
-      document.getElementById('successTitle').textContent = 'Te tendremos en el pensamiento';
-      document.getElementById('successText').textContent = `Entendemos, ${nombre}. Te llevaremos en el corazón ese día.`;
-    }
+    submittedFamilies.add(rsvpSelectedFamily.id);
+    try {
+      localStorage.setItem('rsvp_submitted', JSON.stringify([...submittedFamilies]));
+      localStorage.setItem('rsvp_abuelitos', JSON.stringify(sharedConfirmed));
+    } catch(e) {}
+    document.getElementById('confirmedList').innerHTML =
+      `<p class="rsvp-confirmed-list-title">Confirmados</p>` +
+      names.map(n => `<div class="rsvp-confirmed-name">${n}</div>`).join('');
+    rsvpGoStep(3);
   } catch {
-    showError('Hubo un problema al enviar. Por favor intenta de nuevo.');
+    const err = document.getElementById('rsvpErrorMsg');
+    err.textContent = 'Hubo un problema al enviar. Por favor intenta de nuevo.';
+    err.classList.add('show');
+    setTimeout(() => err.classList.remove('show'), 7000);
+    btnText.textContent = 'Confirmar asistencia';
+    btn.classList.remove('btn-loading');
   }
 }
 
-function showError(msg) {
-  const el = document.getElementById('errorMsg');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 7000);
-  const btn = document.getElementById('btnText');
-  btn.textContent = 'Enviar confirmación';
-  btn.closest('button').classList.remove('btn-loading');
+function rsvpGoBackToStart() {
+  rsvpRenderFamilies();
+  rsvpGoStep(1);
+}
+
+// Reset all RSVP state — call rsvpReset() from the browser console to clear
+window.rsvpReset = function() {
+  localStorage.removeItem('rsvp_submitted');
+  localStorage.removeItem('rsvp_abuelitos');
+  submittedFamilies.clear();
+  Object.keys(sharedConfirmed).forEach(k => delete sharedConfirmed[k]);
+  rsvpRenderFamilies();
+  if (rsvpStep !== 1) rsvpGoStep(1);
+};
+
+// Sync state from localStorage (handles same-tab DevTools edits + other tabs)
+function rsvpSyncFromStorage() {
+  try {
+    const ids     = JSON.parse(localStorage.getItem('rsvp_submitted') || '[]');
+    const abuelos = JSON.parse(localStorage.getItem('rsvp_abuelitos') || '{}');
+    const changed = ids.length !== submittedFamilies.size ||
+                    ids.some(id => !submittedFamilies.has(id)) ||
+                    [...submittedFamilies].some(id => !ids.includes(id)) ||
+                    Object.keys(abuelos).length !== Object.keys(sharedConfirmed).length;
+    if (changed) {
+      submittedFamilies.clear();
+      ids.forEach(id => submittedFamilies.add(id));
+      Object.keys(sharedConfirmed).forEach(k => delete sharedConfirmed[k]);
+      Object.assign(sharedConfirmed, abuelos);
+      rsvpRenderFamilies();
+    }
+  } catch(e) {}
+}
+setInterval(rsvpSyncFromStorage, 1000);
+window.addEventListener('storage', rsvpSyncFromStorage);
+
+rsvpRenderFamilies();
+
+// Admin panel — add ?admin to the URL to show it
+if (new URLSearchParams(location.search).has('admin')) {
+  const panel = document.createElement('div');
+  panel.id = 'adminPanel';
+  panel.style.cssText = `
+    position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+    background: #203129; border: 1px solid rgba(255,255,255,0.18);
+    padding: 20px; min-width: 240px; border-radius: 2px;
+    font-family: 'Lora', serif; color: #fdfaf5;
+  `;
+
+  function renderAdminPanel() {
+    const submitted = [...submittedFamilies];
+    panel.innerHTML = `
+      <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;opacity:0.4;margin-bottom:12px">Admin RSVP</div>
+      <div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.35;margin-bottom:8px">Familias confirmadas</div>
+      <div id="adminFamilyList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+        ${submitted.length === 0
+          ? `<span style="font-size:12px;opacity:0.4;font-style:italic">Ninguna familia ha confirmado aún.</span>`
+          : submitted.map(id => {
+              const f = FAMILIES.find(f => f.id === id);
+              return `<label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px">
+                <input type="checkbox" data-id="${id}" checked style="accent-color:#A53E24">
+                ${f ? f.label : id}
+              </label>`;
+            }).join('')
+        }
+      </div>
+      <button id="adminResetBtn" style="
+        width:100%;padding:10px;background:#A53E24;color:#fdfaf5;
+        border:none;cursor:pointer;font-family:'Lora',serif;
+        font-size:10px;letter-spacing:0.14em;text-transform:uppercase;border-radius:2px;
+        ${submitted.length === 0 ? 'opacity:0.35;pointer-events:none' : ''}
+      ">Reset seleccionados</button>
+    `;
+    document.getElementById('adminResetBtn')?.addEventListener('click', () => {
+      const checked = [...panel.querySelectorAll('#adminFamilyList input:checked')];
+      if (!checked.length) return;
+      const toReset = checked.map(el => el.dataset.id);
+      const labelsToReset = toReset.map(id => FAMILIES.find(f => f.id === id)?.label).filter(Boolean);
+      toReset.forEach(id => submittedFamilies.delete(id));
+      Object.keys(sharedConfirmed).forEach(k => {
+        if (labelsToReset.includes(sharedConfirmed[k])) delete sharedConfirmed[k];
+      });
+      try {
+        localStorage.setItem('rsvp_submitted', JSON.stringify([...submittedFamilies]));
+        localStorage.setItem('rsvp_abuelitos', JSON.stringify(sharedConfirmed));
+      } catch(e) {}
+      rsvpRenderFamilies();
+      renderAdminPanel();
+    });
+  }
+
+  renderAdminPanel();
+  document.body.appendChild(panel);
+
+  const _origSync = rsvpSyncFromStorage;
+  rsvpSyncFromStorage = function() { _origSync(); renderAdminPanel(); };
 }
 
 function openOverlay()     { document.getElementById('dressOverlay').classList.add('open');    document.body.style.overflow = 'hidden'; }
