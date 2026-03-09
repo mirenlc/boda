@@ -1521,6 +1521,8 @@ footer p {
   .hero-initial--tl { top: -60px;left: -300px;}
   .hero-initial--br {bottom: -60px; right: -50px;}
   .green-band    { padding: 24px; }
+  .btn-row { flex-direction: column; }
+  .btn-row > * { width: 100%; text-align: center; box-sizing: border-box; }
 }
 
 

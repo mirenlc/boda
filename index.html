@@ -300,14 +300,14 @@
         <input type="text" id="plusOneInput" class="plus-one-input" placeholder="Nombre del invitado adicional..." style="display:none">
       </div>
       <div class="rsvp-divider"><span>✦</span></div>
+      <div style="margin-bottom:10px">
+        <button class="btn-ghost-light" id="rsvpDeclineBtn" onclick="rsvpDecline()" style="width:100%;text-align:center;font-size:12px;opacity:0.55;box-sizing:border-box">No podremos asistir</button>
+      </div>
       <div class="btn-row">
         <button class="btn-ghost-light" onclick="rsvpGoStep(1)">← Volver</button>
         <button class="btn btn-orange rsvp-confirm-btn" id="rsvpConfirmBtn" onclick="rsvpSubmit()"><span id="rsvpBtnText">Confirmar asistencia</span></button>
       </div>
       <div class="error-msg" id="rsvpErrorMsg"></div>
-      <div style="text-align:center;margin-top:16px">
-        <button class="btn-ghost-light" id="rsvpDeclineBtn" onclick="rsvpDecline()" style="font-size:12px;opacity:0.55">No podremos asistir</button>
-      </div>
     </div>
 
     <!-- Step 3: Success -->
@@ -492,7 +492,6 @@ function rsvpRenderFamilies() {
 function rsvpSelectFamily(id) {
   rsvpSelectedFamily = FAMILIES.find(f => f.id === id);
   rsvpChecked = {};
-  rsvpSelectedFamily.members.forEach(m => { if (!sharedConfirmed[m.id]) rsvpChecked[m.id] = true; });
   document.getElementById('step2Label').textContent = '¿Quiénes de ' + rsvpSelectedFamily.label + ' asistirán?';
   rsvpRenderGuests();
   document.getElementById('plusOneInput').value = '';
@@ -556,8 +555,12 @@ async function rsvpSubmit() {
   btnText.textContent = 'Enviando';
   btn.classList.add('btn-loading');
 
+  const newAbuelitos = [];
   confirmed.forEach(m => {
-    if (m.shared && !sharedConfirmed[m.id]) sharedConfirmed[m.id] = rsvpSelectedFamily.label;
+    if (m.shared && !sharedConfirmed[m.id]) {
+      sharedConfirmed[m.id] = rsvpSelectedFamily.label;
+      newAbuelitos.push(m.name);
+    }
   });
 
   const names = [...confirmed.map(m => m.name), ...(plusOneName ? [plusOneName] : [])];
@@ -581,6 +584,18 @@ async function rsvpSubmit() {
       localStorage.setItem('rsvp_submitted', JSON.stringify([...submittedFamilies]));
       localStorage.setItem('rsvp_abuelitos', JSON.stringify(sharedConfirmed));
     } catch(e) {}
+    if (newAbuelitos.length) {
+      fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject:  '🌿 Abuelitos confirmados · ' + rsvpSelectedFamily.label,
+          familia:   rsvpSelectedFamily.label,
+          abuelitos: newAbuelitos.join(', '),
+          mensaje:   'La familia ' + rsvpSelectedFamily.label + ' incluyó a los abuelitos: ' + newAbuelitos.join(' y ') + '.',
+        })
+      }).catch(() => {});
+    }
     document.getElementById('confirmedList').innerHTML =
       `<p class="rsvp-confirmed-list-title">Confirmados</p>` +
       names.map(n => `<div class="rsvp-confirmed-name">${n}</div>`).join('');
