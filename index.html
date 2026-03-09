@@ -10,11 +10,14 @@
 
 <!-- Open Graph / Social sharing -->
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://mirenlc.github.io/boda/">
 <meta property="og:title" content="Miren & Randy · 01.04.2026">
 <meta property="og:description" content="Nos casamos el 1 de Abril en Cancún. ¡Te esperamos!">
-<meta property="og:image" content="images/foto-anillo.jpg">
+<meta property="og:image" content="https://mirenlc.github.io/boda/images/social-sharing.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="images/foto-anillo.jpg">
+<meta name="twitter:image" content="https://mirenlc.github.io/boda/images/social-sharing.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Lora:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Miniver&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -312,9 +315,7 @@
         <p>Ya tenemos tu confirmación.<br>¡Los esperamos en Cancún!</p>
         <div class="rsvp-confirmed-list" id="confirmedList"></div>
       </div>
-      <div style="text-align:center;margin-top:20px">
-        <button class="btn-ghost-light" onclick="rsvpGoBackToStart()">Confirmar otra familia →</button>
-      </div>
+      <p style="text-align:center;margin-top:20px;font-size:12px;opacity:0.55;font-style:italic">En caso de necesitar hacer cambios, comunícate con los novios.</p>
     </div>
 
   </div>
@@ -517,7 +518,7 @@ function rsvpRenderGuests() {
       const already = !!sharedConfirmed[m.id];
       const checked = rsvpChecked[m.id] || already;
       html += `<div class="rsvp-guest-item${already ? ' disabled' : checked ? ' checked' : ''}" onclick="rsvpToggleGuest('${m.id}')">
-        <div class="rsvp-checkbox">${checked ? '✓' : ''}</div>
+        <div class="rsvp-checkbox">${checked && !already ? '✓' : ''}</div>
         <div style="flex:1">
           <span class="rsvp-guest-name">${m.name}</span>
           ${already ? `<div class="rsvp-guest-confirmed-by">Confirmado por ${sharedConfirmed[m.id]}</div>` : ''}
@@ -624,8 +625,8 @@ function rsvpSyncFromStorage() {
     }
   } catch(e) {}
 }
-setInterval(rsvpSyncFromStorage, 1000);
-window.addEventListener('storage', rsvpSyncFromStorage);
+setInterval(() => rsvpSyncFromStorage(), 1000);
+window.addEventListener('storage', () => rsvpSyncFromStorage());
 
 rsvpRenderFamilies();
 

@@ -1207,6 +1207,7 @@ body::before {
   background: rgba(255,255,255,0.04);
   border-color: rgba(255,255,255,0.1);
   border-style: dashed;
+  justify-content: flex-start;
 }
 .rsvp-checkbox {
   width: 18px; height: 18px;
@@ -1221,7 +1222,7 @@ body::before {
   color: var(--white);
 }
 .rsvp-guest-item.checked .rsvp-checkbox  { background: var(--orange); border-color: var(--orange); }
-.rsvp-guest-item.disabled .rsvp-checkbox { background: var(--green-mid); border-color: var(--green-mid); }
+.rsvp-guest-item.disabled .rsvp-checkbox { display: none; }
 .rsvp-guest-name {
   font-family: 'Lora', serif;
   font-size: 15px;
