@@ -893,10 +893,8 @@ body::before {
   stroke-dasharray: 5 10;
 }
 
-.details-inner > :nth-child(2).detail-card--paper { transform: rotate(-1.2deg); }
-.details-inner > :nth-child(3).detail-card--paper { transform: rotate(1deg); }
-.details-inner > :nth-child(2).detail-card--paper:hover { transform: rotate(-1.2deg) translateY(-4px); }
-.details-inner > :nth-child(3).detail-card--paper:hover { transform: rotate(1deg) translateY(-4px); }
+.details-inner > :nth-child(2).detail-card--paper:hover { transform: translateY(-4px); }
+.details-inner > :nth-child(3).detail-card--paper:hover { transform: translateY(-4px); }
 
 .detail-icon-wrap {
   width: 64px; height: 64px;
