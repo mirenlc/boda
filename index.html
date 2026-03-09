@@ -134,7 +134,7 @@
     <div class="invite-rule"></div>
 
     <p class="invite-sub">
-      Una ceremonia íntima con la gente que más queremos.<br>Nos haría muy felices tenerte ahí ese día.
+      Una ceremonia íntima con la gente que más queremos.Nos haría muy felices tenerte ahí ese día.
     </p>
   </div>
 </div>
@@ -193,7 +193,7 @@
   </svg>-->
 
   <p class="green-band-quote" id="bandQuote">
-    "Te regalo las piezas que a mi alma conforman, porque al final del infinito, siempre nos volvemos a encontrar."
+    "Te regalo lo que me conforma, porque aunque todo cambie, siempre acabamos encontrándonos."
   </p>
   <div class="green-band-line"></div>
 </div>
@@ -292,13 +292,14 @@
     <!-- Step 2: Member selection -->
     <div id="rsvpStep2" class="rsvp-step-panel" style="display:none">
       <p class="rsvp-step-label" id="step2Label"></p>
-      <div class="rsvp-guest-list" id="guestList"></div>
+      <div class="rsvp-guest-list" id="guestListRegular"></div>
       <div class="rsvp-plus-one">
         <div class="plus-one-toggle" onclick="rsvpTogglePlusOne()">
           <span class="plus-icon" id="plusOneIcon">+</span> Agregar a alguien más
         </div>
         <input type="text" id="plusOneInput" class="plus-one-input" placeholder="Nombre del invitado adicional..." style="display:none">
       </div>
+      <div class="rsvp-guest-list" id="guestListShared"></div>
       <div class="rsvp-divider"><span>✦</span></div>
       <div style="margin-bottom:10px">
         <button class="btn-ghost-light" id="rsvpDeclineBtn" onclick="rsvpDecline()" style="width:100%;text-align:center;font-size:12px;opacity:0.55;box-sizing:border-box">No podremos asistir</button>
@@ -393,7 +394,7 @@ const FAMILIES = [
   { id: 'conrado_alarcon_marta',  label: 'Conrado Alarcón, Marta',  side: 'novia', members: [{ id: 'marta_ca', name: 'Marta' }, { id: 'leonel_ca', name: 'Leonel' }, ...ABUELITOS] },
   { id: 'conrado_poxtam',         label: 'Conrado Poxtam',          side: 'novia', members: [{ id: 'alfonso_cp', name: 'Alfonso' }, { id: 'elizabeth_cp', name: 'Elizabeth' }, { id: 'alfonso_shalom_cp', name: 'Alfonso (Shalom)' }, { id: 'samir_cp', name: 'Samir' }, ...ABUELITOS] },
   { id: 'conrado_priego',         label: 'Conrado Priego',          side: 'novia', members: [{ id: 'william_cpr', name: 'William' }, { id: 'carmen_cpr', name: 'Carmen' }, ...ABUELITOS] },
-  { id: 'conrado_palafox',        label: 'Conrado Palafox',         side: 'novia', members: [{ id: 'leonel_cpal', name: 'Leonel' }, { id: 'margarita_cpal', name: 'Margarita' }, { id: 'itzel_cpal', name: 'Itzel' }, ...ABUELITOS] },
+  { id: 'conrado_palafox',        label: 'Conrado Palafox',         side: 'novia', members: [{ id: 'leonel_cpal', name: 'Leonel' }, { id: 'margarita_cpal', name: 'Margarita' }, { id: 'itzel_cpal', name: 'Itzel' },  { id: 'marco_cpal', name: 'Marco' }, { id: 'alberto_cpal', name: 'Alberto' }, { id: 'alain_cpal', name: 'Alain' }, ...ABUELITOS] },
   { id: 'osorio_conrado',         label: 'Osorio Conrado',          side: 'novia', members: [{ id: 'honorio_oc', name: 'Honorio' }, { id: 'leticia_oc', name: 'Leticia' }, ...ABUELITOS] },
   { id: 'lopez_conrado',          label: 'López Conrado',           side: 'novia', members: [{ id: 'hugo_lc', name: 'Hugo' }, { id: 'genoveva_lc', name: 'Genoveva' }, { id: 'diego_lc', name: 'Diego' }, { id: 'julian_lc', name: 'Julián' }, ...ABUELITOS] },
   { id: 'conrado_alarcon_rudili', label: 'Conrado Alarcón, Rudili', side: 'novia', members: [{ id: 'rudili_car', name: 'Rudili' }, ...ABUELITOS] },
@@ -504,22 +505,23 @@ function rsvpSelectFamily(id) {
 function rsvpRenderGuests() {
   const regular = rsvpSelectedFamily.members.filter(m => !m.shared);
   const shared  = rsvpSelectedFamily.members.filter(m =>  m.shared);
-  let html = '';
 
+  let regularHtml = '';
   regular.forEach(m => {
     const checked = rsvpChecked[m.id];
-    html += `<div class="rsvp-guest-item${checked ? ' checked' : ''}" onclick="rsvpToggleGuest('${m.id}')">
+    regularHtml += `<div class="rsvp-guest-item${checked ? ' checked' : ''}" onclick="rsvpToggleGuest('${m.id}')">
       <div class="rsvp-checkbox">${checked ? '✓' : ''}</div>
       <span class="rsvp-guest-name">${m.name}</span>
     </div>`;
   });
 
+  let sharedHtml = '';
   if (shared.length) {
-    html += `<div class="rsvp-guest-section-title">Abuelitos</div>`;
+    sharedHtml += `<div class="rsvp-guest-section-title">Abuelitos</div>`;
     shared.forEach(m => {
       const already = !!sharedConfirmed[m.id];
       const checked = rsvpChecked[m.id] || already;
-      html += `<div class="rsvp-guest-item${already ? ' disabled' : checked ? ' checked' : ''}" onclick="rsvpToggleGuest('${m.id}')">
+      sharedHtml += `<div class="rsvp-guest-item${already ? ' disabled' : checked ? ' checked' : ''}" onclick="rsvpToggleGuest('${m.id}')">
         <div class="rsvp-checkbox">${checked && !already ? '✓' : ''}</div>
         <div style="flex:1">
           <span class="rsvp-guest-name">${m.name}</span>
@@ -530,7 +532,8 @@ function rsvpRenderGuests() {
     });
   }
 
-  document.getElementById('guestList').innerHTML = html;
+  document.getElementById('guestListRegular').innerHTML = regularHtml;
+  document.getElementById('guestListShared').innerHTML  = sharedHtml;
 }
 
 function rsvpToggleGuest(id) {
@@ -768,6 +771,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay
 })();
 
 // Envelope intro
+document.body.style.overflow = 'hidden';
+
 document.getElementById('env-open-btn').addEventListener('click', function() {
   this.classList.add('clicked');
   document.getElementById('envelope').classList.replace('close', 'open');
@@ -778,7 +783,10 @@ document.getElementById('env-open-btn').addEventListener('click', function() {
       document.querySelector('.env-wrap').classList.add('slide-out');
       setTimeout(() => {
         loader.classList.add('done');
-        setTimeout(() => { loader.style.display = 'none'; }, 700);
+        setTimeout(() => {
+          loader.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 700);
       }, 700);
     }, 800);
   }, 4600);
