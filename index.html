@@ -21,6 +21,29 @@
 </head>
 <body>
 
+<!-- ══════════ ENVELOPE INTRO ══════════ -->
+<div id="env-loader">
+  <div class="env-wrap">
+    <div id="envelope" class="close">
+      <img class="env-img env-img-open"    src="images/envelope-open.png"    alt="">
+      <img class="env-img env-img-front"   src="images/envelope-front.png"   alt="">
+      <img class="env-img env-img-closed"  src="images/envelope-closed.png"  alt="">
+      <div class="letter">
+        <img src="images/invite.png" alt="Invitación" class="letter-invite-img">
+      </div>
+      <div class="leaves">
+        <div class="leaf l1"></div>
+        <div class="leaf l2"></div>
+        <div class="leaf l3"></div>
+        <div class="leaf l4"></div>
+        <div class="leaf l5"></div>
+      </div>
+    </div>
+    <button id="env-open-btn" class="btn"><span>Abrir invitación</span></button>
+  </div>
+</div>
+
+
 <!-- ══════════ HERO ══════════ -->
 <section class="hero">
   <div class="hero-overlay"></div>
@@ -102,7 +125,7 @@
     <div class="invite-rule"></div>
 
     <blockquote class="invite-quote">
-      Con mucha emoción, queremos invitarte a nuestra boda civil.
+      Con mucha emoción, queremos invitarte <br>a nuestra boda civil.
     </blockquote>
 
     <div class="invite-rule"></div>
@@ -247,7 +270,7 @@
 
     <div class="success-msg" id="successMsg">
       <span class="emoji" id="successEmoji">🥂</span>
-      <h3 id="successTitle">¡Gracias, nos alegras el día!</h3>
+      <h3 id="successTitle">¡Gracias!</h3>
       <p id="successText">Tu confirmación fue recibida.</p>
     </div>
 
@@ -448,6 +471,22 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay
   update();
   setInterval(update, 1000);
 })();
+
+// Envelope intro
+document.getElementById('env-open-btn').addEventListener('click', function() {
+  document.getElementById('envelope').classList.replace('close', 'open');
+  setTimeout(() => {
+    const loader = document.getElementById('env-loader');
+    loader.classList.add('fade-green');
+    setTimeout(() => {
+      document.querySelector('.env-wrap').classList.add('slide-out');
+      setTimeout(() => {
+        loader.classList.add('done');
+        setTimeout(() => { loader.style.display = 'none'; }, 700);
+      }, 700);
+    }, 800);
+  }, 2600);
+});
 
 </script>
 </body>
