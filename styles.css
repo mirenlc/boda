@@ -577,7 +577,9 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 2;
   overflow: hidden;
 }
 
@@ -586,13 +588,18 @@ body::before {
   width: 100%;
   max-width: 580px;
   background: var(--white);
-  padding: 80px 56px 60px;
+  padding: 80px 56px 120px;
   text-align: center;
   box-shadow:
     0 2px 0 rgba(255,255,255,0.7) inset,
     0 14px 64px rgba(44,37,32,0.16),
     5px 10px 0 rgba(100,88,64,0.07);
-  transform: rotate(-0.3deg);
+  opacity: 0;
+  transform: translate(140%, 80%) rotate(20deg);
+}
+
+.invite-paper.paper-animate {
+  animation: paperSlideIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .invite-paper::before {
@@ -610,6 +617,7 @@ body::before {
   position: absolute;
   top: 0; left: 50%;
   transform: translate(-50%, -52%);
+  opacity: 0;
   width: 110px; height: 110px;
   margin: 0;
   display: flex; align-items: center; justify-content: center;
@@ -646,7 +654,9 @@ body::before {
   align-items: center;
   justify-content: center;
   text-align: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 3;
   overflow: hidden;
 }
 
@@ -683,6 +693,12 @@ body::before {
   position: relative;
   z-index: 1;
   filter: drop-shadow(0 12px 36px rgba(44,37,32,0.18));
+  opacity: 0;
+  transform: translateY(80px);
+}
+
+.polaroid-wrap.polaroid-animate {
+  animation: polaroidUp 0.8s ease-out forwards;
 }
 
 .polaroid {
@@ -749,9 +765,11 @@ body::before {
   background: var(--green);
   padding: 56px;
   text-align: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 4;
   overflow: hidden;
-  height: 40vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -764,14 +782,15 @@ body::before {
   font-weight: 400;
   position: relative;
   z-index: 1;
-  max-width: 500px;
+  max-width: 600px;
+  width: 100%;
   margin: 0 auto;
   line-height: 1.4;
   font-style: italic;
-  vertical-align: middle;
   text-align: center;
-  padding: 40px;
-  
+  box-sizing: border-box;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .green-band-floral {
@@ -800,6 +819,7 @@ body::before {
   background: var(--cream);
   padding: 88px 24px;
   position: relative;
+  z-index: 5;
   overflow: hidden;
 }
 
@@ -938,6 +958,11 @@ body::before {
 /* ════════════════════════════════════════════════════
    RSVP — GREEN DARK SECTION
    ════════════════════════════════════════════════════ */
+.rsvp-footer-wrap {
+  position: relative;
+  z-index: 6;
+}
+
 .rsvp-section {
   background: var(--green);
   padding: 100px 24px 0px;
@@ -1188,11 +1213,12 @@ footer p {
   .details-inner { gap: 40px; }
   .dress-grid    { grid-template-columns: 1fr; }
   .overlay-card  { padding: 40px 22px; }
-  .invite-paper  { padding: 120px 28px; transform: rotate(0); }
+  .invite-paper  { padding: 150px 28px; transform: rotate(0); }
   .polaroid      { transform: rotate(0); max-width: 320px; }
   .hero          { background-position: center 15%; }
   .hero-initial--tl { top: -60px;left: -300px;}
   .hero-initial--br {bottom: -60px; right: -50px;}
+  .green-band    { padding: 24px; }
 }
 
 
@@ -1381,4 +1407,43 @@ footer p {
   0%   { opacity:0; transform: translate(0,0)       rotate(-20deg); }
   20%  { opacity:1; }
   100% { opacity:0; transform: translate(20px,-150px)  rotate(40deg);  }
+}
+
+
+/* ════════════════════════════════════════════════════
+   SCROLL ANIMATIONS
+   ════════════════════════════════════════════════════ */
+
+/* Paper slides in from bottom-right in a curve */
+@keyframes paperSlideIn {
+  0%   { transform: translate(140%, 80%) rotate(20deg); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: rotate(-0.3deg); opacity: 1; }
+}
+
+/* Seal stomps down after paper lands */
+.invite-paper.paper-animate .invite-seal {
+  animation: sealStomp 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) 1.1s forwards;
+}
+@keyframes sealStomp {
+  0%   { opacity: 0; transform: translate(-50%, -52%) scale(2); }
+  70%  { transform: translate(-50%, -52%) scale(0.88); }
+  100% { opacity: 1; transform: translate(-50%, -52%) scale(1); }
+}
+
+/* Polaroid slides up */
+@keyframes polaroidUp {
+  from { opacity: 0; transform: translateY(80px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Green band quote fade-in */
+#bandQuote {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+#bandQuote.quote-visible {
+  opacity: 1;
+  transform: translateY(0);
 }

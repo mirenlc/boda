@@ -114,7 +114,7 @@
 
 <!-- ══════════ INVITATION — PAPER CARD ══════════ -->
 <div class="invite-section">
-  <div class="invite-paper reveal">
+  <div class="invite-paper">
 
     <!-- wax seal -->
     <div class="invite-seal">
@@ -146,7 +146,7 @@
     <h2 class="section-title">Una historia <em>bonita</em></h2>
   </div>
 
-  <div class="polaroid-wrap reveal">
+  <div class="polaroid-wrap">
     <div class="polaroid">
       <!-- tape strips -->
       <div class="tape tape-tl"></div>
@@ -189,7 +189,7 @@
     <ellipse cx="215" cy="76" rx="12" ry="6" fill="#fff" opacity="0.35" transform="rotate(-20 215 76)"/>
   </svg>-->
 
-  <p class="green-band-quote reveal">
+  <p class="green-band-quote" id="bandQuote">
     "Te regalo las piezas que a mi alma conforman, porque al final del infinito, siempre nos volvemos a encontrar."
   </p>
   <div class="green-band-line"></div>
@@ -252,7 +252,8 @@
 </div>
 
 
-<!-- ══════════ RSVP ══════════ -->
+<!-- ══════════ RSVP + FOOTER ══════════ -->
+<div class="rsvp-footer-wrap">
 <div class="rsvp-section" id="rsvp">
   <div class="custom-shape-divider-top-1772970201">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -326,6 +327,7 @@
   <img src="images/wax-seal.png" alt="Miren & Randy" class="footer-seal">
   <p>01 · 04 · 2026 · Cancún, México</p>
 </footer>
+</div><!-- /rsvp-footer-wrap -->
 
 
 <!-- ══════════ DRESS CODE OVERLAY ══════════ -->
@@ -487,6 +489,25 @@ document.getElementById('env-open-btn').addEventListener('click', function() {
     }, 800);
   }, 2600);
 });
+
+// Paper + seal animation — observe the section (paper starts off-screen, so clipped)
+const invitePaper = document.querySelector('.invite-paper');
+const inviteSection = document.querySelector('.invite-section');
+new IntersectionObserver(([e]) => {
+  if (e.isIntersecting) invitePaper.classList.add('paper-animate');
+}, { threshold: 0.1 }).observe(inviteSection);
+
+// Polaroid slide-up
+const polaroidWrap = document.querySelector('.polaroid-wrap');
+new IntersectionObserver(([e]) => {
+  if (e.isIntersecting) polaroidWrap.classList.add('polaroid-animate');
+}, { threshold: 0.3 }).observe(polaroidWrap);
+
+// Green band quote fade-in
+const bandQuote = document.getElementById('bandQuote');
+new IntersectionObserver(([e]) => {
+  if (e.isIntersecting) bandQuote.classList.add('quote-visible');
+}, { threshold: 0.3 }).observe(bandQuote);
 
 </script>
 </body>
