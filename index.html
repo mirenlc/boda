@@ -305,6 +305,9 @@
         <button class="btn btn-orange rsvp-confirm-btn" id="rsvpConfirmBtn" onclick="rsvpSubmit()"><span id="rsvpBtnText">Confirmar asistencia</span></button>
       </div>
       <div class="error-msg" id="rsvpErrorMsg"></div>
+      <div style="text-align:center;margin-top:16px">
+        <button class="btn-ghost-light" id="rsvpDeclineBtn" onclick="rsvpDecline()" style="font-size:12px;opacity:0.55">No podremos asistir</button>
+      </div>
     </div>
 
     <!-- Step 3: Success -->
@@ -590,6 +593,33 @@ async function rsvpSubmit() {
     btnText.textContent = 'Confirmar asistencia';
     btn.classList.remove('btn-loading');
   }
+}
+
+async function rsvpDecline() {
+  const btn = document.getElementById('rsvpDeclineBtn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  try {
+    await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        familia:   rsvpSelectedFamily.label,
+        lado:      rsvpSelectedFamily.side,
+        asistencia: 'No',
+        _subject:  'RSVP (No asiste) · ' + rsvpSelectedFamily.label,
+      })
+    });
+  } catch(e) {}
+  submittedFamilies.add(rsvpSelectedFamily.id);
+  try {
+    localStorage.setItem('rsvp_submitted', JSON.stringify([...submittedFamilies]));
+  } catch(e) {}
+  document.querySelector('#rsvpStep3 .emoji').textContent = '🙏';
+  document.querySelector('#rsvpStep3 h3').textContent = 'Gracias por avisarnos';
+  document.querySelector('#rsvpStep3 p').innerHTML = 'Lamentamos que no puedan acompañarnos,<br>pero los tendremos en mente.';
+  document.getElementById('confirmedList').innerHTML = '';
+  rsvpGoStep(3);
 }
 
 function rsvpGoBackToStart() {
