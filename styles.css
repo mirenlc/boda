@@ -1530,6 +1530,12 @@ footer p {
   .hero-names { font-size: 58px; }
 }
 
+@media (max-width: 700px) {
+  #env-loader::before {
+    background-size: auto 100vh;
+  }
+}
+
 
 /* ════════════════════════════════════════════════════
    ENVELOPE INTRO SCREEN
@@ -1552,7 +1558,7 @@ footer p {
   position: absolute;
   inset: 0;
   background: url('images/mono.svg') no-repeat center center / 70%;
-  opacity: 0.2;
+  opacity: 0.03;
   pointer-events: none;
 }
 
